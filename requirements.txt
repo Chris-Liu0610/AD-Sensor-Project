@@ -1,0 +1,6 @@
+numpy
+opencv-python
+PyQt6
+pyrealsense2
+mediapipe
+pyserial

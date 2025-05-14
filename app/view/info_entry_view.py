@@ -410,6 +410,10 @@ class InfoEntryPanel(QFrame):
                 widget.clear()
             elif isinstance(widget, QComboBox):
                 widget.setCurrentIndex(0)
+            elif isinstance(widget, QDateEdit):
+                widget.setDate(QDate.currentDate())
+            else:
+                widget.clear()
 
 
 if __name__ == "__main__":

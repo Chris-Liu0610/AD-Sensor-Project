@@ -22,12 +22,15 @@ class WebcamCamera:
         return frame
 
 
-
 class RealSenseCamera:
     def __init__(self, width=640, height=480, fps=30):
         self.pipeline = rs.pipeline()
         self.config = rs.config()
         self.config.enable_stream(rs.stream.color, width, height, rs.format.bgr8, fps)
+
+    def reset(self, width=640, height=480, fps=30):
+        self.stop()
+        self.__init__(width, height, fps)
 
     def start(self):
         self.pipeline.start(self.config)
@@ -74,8 +77,7 @@ class CameraDevice:
 
 
 class VideoRecorder:
-    def __init__(self, output_format="mp4", width=640, height=480, fps=30):
-        self.output_format = output_format
+    def __init__(self, width=640, height=480, fps=30):
         self.width = width
         self.height = height
         self.fps = fps
@@ -84,44 +86,40 @@ class VideoRecorder:
         self.fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         self.duration_count = 0
 
-    def set_config(self, width, height, fps, duration):
+    def set_config(self, filename, width=640, height=480, fps=30, duration=None):
+        self.filename = filename
+        self.fps = fps
         self.width = width
         self.height = height
-        self.fps = fps
-        self.duration = duration
+        self.duration = duration * fps if duration else None
 
-    def start(self, filename):
-        if self.is_recording:
-            raise RuntimeError("Recording is already in progress.")
-        self.writer = cv2.VideoWriter(filename, self.fourcc, self.fps, (self.width, self.height))
+    def start(self):
+        self.writer = cv2.VideoWriter(
+            self.filename, self.fourcc, self.fps, (self.width, self.height)
+        )
         self.is_recording = True
         self.duration_count = 0
 
     def stop(self):
-        if not self.is_recording:
-            raise RuntimeError("Recording is not in progress.")
         self.writer.release()
         self.is_recording = False
 
     def record_frame(self, frame):
-        if not self.is_recording:
-            raise RuntimeError("Recording is not in progress.")
         if frame is None:
             raise ValueError("Frame is None.")
-        if self.duration_count >= self.duration:
+        if self.duration is None or self.duration_count >= self.duration:
             self.stop()
             return
         self.writer.write(frame)
         self.duration_count += 1
 
-
-
+    
 
 if __name__ == "__main__":
     
     camera = CameraDevice(camera_type="RealSense")
     video_recorder = VideoRecorder()
-    video_recorder.set_config(width=640, height=480, fps=30, duration=120)  # Set the desired configuration
+    video_recorder.set_config(filename="output.mp4", width=640, height=480, fps=30, duration=3)  # Set the desired configuration
     print(video_recorder.is_recording)
     camera_types = ["Webcam", "RealSense"] 
     cam_idx = 0
@@ -144,7 +142,7 @@ if __name__ == "__main__":
             camera.switch_camera(camera_types[cam_idx])
             cam_idx = (cam_idx + 1) % len(camera_types)
         if key == ord('s'):
-            video_recorder.start("output.mp4")
+            video_recorder.start()
 
     camera.stop()
     cv2.destroyAllWindows()

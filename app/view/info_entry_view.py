@@ -1,17 +1,17 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import (
+    QComboBox, 
     QFrame, 
-    QVBoxLayout, 
-    QScrollArea, 
-    QWidget, 
+    QGridLayout, 
+    QGroupBox, 
+    QHBoxLayout,
     QLabel, 
     QLineEdit, 
-    QComboBox, 
-    QGroupBox, 
-    QGridLayout, 
     QPushButton, 
-    QHBoxLayout
+    QScrollArea, 
+    QVBoxLayout, 
+    QWidget, 
 )
 
 

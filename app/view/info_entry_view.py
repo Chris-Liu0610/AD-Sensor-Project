@@ -267,7 +267,6 @@ class InfoEntryPanel(QFrame):
         self.entries['shooting_date'].setCalendarPopup(True)
         self.entries['shooting_date'].setDate(QDate.currentDate())
         self.entries['shooting_date'].setMinimumHeight(38)
-        self.entries['shooting_date'].setKeyboardTracking(True)
         self.entries['shooting_date'].setStyleSheet(
             """
             font-weight:normal; color:#495057; 

@@ -216,6 +216,10 @@ class InfoEntryPanel(QFrame):
         self.entries['birthday'] = self.create_entry('請輸入生日 (yyyy/mm/dd)')
         basic_layout.addWidget(self.entries['birthday'], 1, 3)
         
+        basic_layout.addWidget(self.create_label('聯絡電話：'), 2, 0)
+        self.entries['phone'] = self.create_entry('請輸入聯絡電話')
+        basic_layout.addWidget(self.entries['phone'], 2, 1, 1, 3)
+
         # 設定列寬比例
         basic_layout.setColumnStretch(0, 1)
         basic_layout.setColumnStretch(1, 3)
@@ -234,26 +238,19 @@ class InfoEntryPanel(QFrame):
         self.entries['shooting_date'] = self.create_entry('請輸入拍攝日期 (yyyy/mm/dd)')
         shooting_layout.addWidget(self.entries['shooting_date'], 0, 1, 1, 3)
         
+        self.entries['reason'] = self.create_combobox(['請選擇拍攝原因', '醫療', '健檢', '其他'])
+        shooting_layout.addWidget(self.create_label('拍攝原因：'), 1, 0)
+        shooting_layout.addWidget(self.entries['reason'], 1, 1, 1, 3)
+
+        self.entries['shooting_location'] = self.create_combobox(['請選擇拍攝地點', '醫院', '診所', '其他'])
+        shooting_layout.addWidget(self.create_label('拍攝地點：'), 2, 0)
+        shooting_layout.addWidget(self.entries['shooting_location'], 2, 1, 1, 3)
+
         shooting_layout.setColumnStretch(0, 1)
         shooting_layout.setColumnStretch(1, 5)
         
         shooting_group.setLayout(shooting_layout)
         self.main_layout.addWidget(shooting_group)
-        
-        # 聯絡資訊群組
-        contact_group = self.create_group_box('聯絡資訊')
-        contact_layout = QGridLayout()
-        contact_layout.setSpacing(15)
-        
-        contact_layout.addWidget(self.create_label('聯絡電話：'), 0, 0)
-        self.entries['phone'] = self.create_entry('請輸入聯絡電話')
-        contact_layout.addWidget(self.entries['phone'], 0, 1, 1, 3)
-        
-        contact_layout.setColumnStretch(0, 1)
-        contact_layout.setColumnStretch(1, 5)
-        
-        contact_group.setLayout(contact_layout)
-        self.main_layout.addWidget(contact_group)
         
         # 醫療資訊群組
         medical_group = self.create_group_box('醫療資訊')

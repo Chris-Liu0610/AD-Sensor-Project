@@ -116,8 +116,7 @@ class VideoRecorder:
     
 
 if __name__ == "__main__":
-    
-    camera = CameraDevice(camera_type="RealSense")
+    camera = CameraDevice(camera_type="Webcam")
     video_recorder = VideoRecorder()
     video_recorder.set_config(filename="output.mp4", width=640, height=480, fps=30, duration=3)  # Set the desired configuration
     print(video_recorder.is_recording)

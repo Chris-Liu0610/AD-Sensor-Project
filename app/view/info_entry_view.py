@@ -235,11 +235,11 @@ class InfoEntryPanel(QFrame):
         self.entries['birthday'].setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter) 
         basic_layout.addWidget(self.entries['birthday'], 1, 3)
         
-        basic_layout.addWidget(self.create_label('身高:'), 2, 0)
+        basic_layout.addWidget(self.create_label('身高：'), 2, 0)
         self.entries['height'] = self.create_entry('請輸入身高')
         basic_layout.addWidget(self.entries['height'], 2, 1)
 
-        basic_layout.addWidget(self.create_label('體重:'), 2, 2)
+        basic_layout.addWidget(self.create_label('體重：'), 2, 2)
         self.entries['weight'] = self.create_entry('請輸入體重')
         basic_layout.addWidget(self.entries['weight'], 2, 3)
 

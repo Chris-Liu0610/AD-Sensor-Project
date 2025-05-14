@@ -11,12 +11,11 @@ class ImageViewer(QLabel):
         self.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.setMinimumSize(QSize(640, 480))
         self.setFrameShape(QFrame.Shape.Box)
-        self.setStyleSheet("background-color: #000;")
+
         self.setText("No Camera Feed")
         self.setScaledContents(False) 
         self.original_pixmap = None
-        # Fill the label with a gray color
-        self.setStyleSheet("background-color: rgb(200, 200, 200);")
+        self.setStyleSheet("background-color: rgb(0, 0, 0);")
 
     def resizeEvent(self, event):
         """Handle resize events to scale the image appropriately."""
@@ -63,7 +62,7 @@ if __name__ == "__main__":
     from PyQt6.QtWidgets import QApplication
     import numpy as np
 
-    dummy_image = np.zeros((480, 640, 3), dtype=np.uint8)
+    dummy_image = np.ones((480, 640, 3), dtype=np.uint8) * 150
     # Fill polygon with white color
     dummy_image[100:200, 100:200] = [255, 255, 255]
 

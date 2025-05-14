@@ -1,7 +1,8 @@
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QDate
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import (
     QComboBox, 
+    QDateEdit,
     QFrame, 
     QGridLayout, 
     QGroupBox, 
@@ -205,6 +206,12 @@ class InfoEntryPanel(QFrame):
         
         basic_layout.addWidget(self.create_label('性別：'), 0, 2)
         self.entries['gender'] = self.create_combobox(['請選擇性別', '男', '女', '其他'])
+        self.entries['gender'].setStyleSheet(
+            """
+            font-size: 15; font-weight:normal; color:#495057; 
+            background-color: rgb(255, 255, 255); border-radius: 5px;
+            """
+        )
         basic_layout.addWidget(self.entries['gender'], 0, 3)
         
         # 年齡和生日
@@ -213,12 +220,32 @@ class InfoEntryPanel(QFrame):
         basic_layout.addWidget(self.entries['age'], 1, 1)
         
         basic_layout.addWidget(self.create_label('生日：'), 1, 2)
-        self.entries['birthday'] = self.create_entry('請輸入生日 (yyyy/mm/dd)')
+        self.entries['birthday'] = QDateEdit()
+        self.entries['birthday'].setDisplayFormat('yyyy/MM/dd')
+        self.entries['birthday'].setCalendarPopup(True)
+        self.entries['birthday'].setDate(QDate.currentDate())
+        self.entries['birthday'].setMinimumHeight(38)
+        self.entries['birthday'].setKeyboardTracking(True)
+        self.entries['birthday'].setStyleSheet(
+            """
+            font-weight:normal; color:#495057; 
+            background-color: rgb(255, 255, 255); border-radius: 5px;
+            """
+        )
+        self.entries['birthday'].setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter) 
         basic_layout.addWidget(self.entries['birthday'], 1, 3)
         
-        basic_layout.addWidget(self.create_label('聯絡電話：'), 2, 0)
+        basic_layout.addWidget(self.create_label('身高:'), 2, 0)
+        self.entries['height'] = self.create_entry('請輸入身高')
+        basic_layout.addWidget(self.entries['height'], 2, 1)
+
+        basic_layout.addWidget(self.create_label('體重:'), 2, 2)
+        self.entries['weight'] = self.create_entry('請輸入體重')
+        basic_layout.addWidget(self.entries['weight'], 2, 3)
+
+        basic_layout.addWidget(self.create_label('聯絡電話：'), 3, 0)
         self.entries['phone'] = self.create_entry('請輸入聯絡電話')
-        basic_layout.addWidget(self.entries['phone'], 2, 1, 1, 3)
+        basic_layout.addWidget(self.entries['phone'], 3, 1)
 
         # 設定列寬比例
         basic_layout.setColumnStretch(0, 1)
@@ -235,14 +262,31 @@ class InfoEntryPanel(QFrame):
         shooting_layout.setSpacing(15)
         
         shooting_layout.addWidget(self.create_label('拍攝日期：'), 0, 0)
-        self.entries['shooting_date'] = self.create_entry('請輸入拍攝日期 (yyyy/mm/dd)')
+        self.entries['shooting_date'] = QDateEdit()
+        self.entries['shooting_date'].setDisplayFormat('yyyy/MM/dd')
+        self.entries['shooting_date'].setCalendarPopup(True)
+        self.entries['shooting_date'].setDate(QDate.currentDate())
+        self.entries['shooting_date'].setMinimumHeight(38)
+        self.entries['shooting_date'].setKeyboardTracking(True)
+        self.entries['shooting_date'].setStyleSheet(
+            """
+            font-weight:normal; color:#495057; 
+            background-color: rgb(255, 255, 255); border-radius: 5px;
+            """
+        )
         shooting_layout.addWidget(self.entries['shooting_date'], 0, 1, 1, 3)
         
         self.entries['reason'] = self.create_combobox(['請選擇拍攝原因', '醫療', '健檢', '其他'])
+        self.entries['reason'].setStyleSheet(
+            """
+            font-size: 15; font-weight:normal; color:#495057; 
+            background-color: rgb(255, 255, 255); border-radius: 5px;
+            """
+        )
         shooting_layout.addWidget(self.create_label('拍攝原因：'), 1, 0)
         shooting_layout.addWidget(self.entries['reason'], 1, 1, 1, 3)
 
-        self.entries['shooting_location'] = self.create_combobox(['請選擇拍攝地點', '醫院', '診所', '其他'])
+        self.entries['shooting_location'] = self.create_entry('請輸入拍攝地點')
         shooting_layout.addWidget(self.create_label('拍攝地點：'), 2, 0)
         shooting_layout.addWidget(self.entries['shooting_location'], 2, 1, 1, 3)
 
@@ -254,18 +298,28 @@ class InfoEntryPanel(QFrame):
         
         # 醫療資訊群組
         medical_group = self.create_group_box('醫療資訊')
-        medical_layout = QVBoxLayout()
+        medical_layout = QGridLayout()
         medical_layout.setSpacing(15)
         
         # 病史
-        medical_layout.addWidget(self.create_label('病史：'))
+        medical_layout.addWidget(self.create_label('病史：'), 0, 0)
         self.entries['medical_history'] = self.create_entry('請輸入病史')
-        medical_layout.addWidget(self.entries['medical_history'])
+        medical_layout.addWidget(self.entries['medical_history'], 0, 1)
         
+        # 過敏史
+        medical_layout.addWidget(self.create_label('過敏史：'), 1, 0)
+        self.entries['allergy_history'] = self.create_entry('請輸入過敏史')
+        medical_layout.addWidget(self.entries['allergy_history'], 1, 1)
+
+        # 目前用藥
+        medical_layout.addWidget(self.create_label('目前用藥：'), 2, 0)
+        self.entries['current_medication'] = self.create_entry('請輸入目前服用藥物')
+        medical_layout.addWidget(self.entries['current_medication'], 2, 1)
+
         # 注意事項
-        medical_layout.addWidget(self.create_label('注意事項：'))
+        medical_layout.addWidget(self.create_label('注意事項：'), 3, 0)
         self.entries['notes'] = self.create_entry('請輸入注意事項')
-        medical_layout.addWidget(self.entries['notes'])
+        medical_layout.addWidget(self.entries['notes'], 3, 1)
         
         medical_group.setLayout(medical_layout)
         self.main_layout.addWidget(medical_group)

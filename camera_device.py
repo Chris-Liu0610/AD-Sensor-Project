@@ -319,3 +319,4 @@ if __name__ == "__main__":
         #     video_recorder.start("output.mp4")
     camera.stop()
     cv2.destroyAllWindows()
+    

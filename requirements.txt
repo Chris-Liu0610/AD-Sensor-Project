@@ -1,0 +1,5 @@
+opencv-python
+PyQt6
+pyrealsense2
+pyserial
+pandas

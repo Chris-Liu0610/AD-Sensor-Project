@@ -52,9 +52,9 @@ class PersonalWindow(QtWidgets.QFrame):
         self.grid3_layout.setSpacing(15)
         label_ID = label_setup("編號 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid3_layout.addWidget(label_ID, 0, 0)
-        entry_ID = entry_setup("請輸入編號", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
-        self.grid3_layout.addWidget(entry_ID, 0, 1)
-        self.widgets['entry_ID'] = entry_ID
+        self.entry_ID = entry_setup("請輸入編號", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
+        self.grid3_layout.addWidget(self.entry_ID, 0, 1)
+        self.widgets['entry_ID'] = self.entry_ID
 
         label_height = label_setup("身高 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid3_layout.addWidget(label_height, 0, 2)
@@ -215,7 +215,7 @@ class PersonalWindow(QtWidgets.QFrame):
         grid9_layout_box = QtWidgets.QWidget()
         grid9_layout_box.setStyleSheet("border: 0px;")
         self.grid9_layout = QtWidgets.QGridLayout(grid9_layout_box)
-        entry_save_path = entry_setup("", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;") 
+        entry_save_path = entry_setup("請選擇儲存資料夾", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;") 
         entry_save_path.setReadOnly(True)
         self.grid9_layout.addWidget(entry_save_path, 1, 0, 1, 4)
         self.save_path_text['entry_save_path'] = entry_save_path
@@ -299,6 +299,7 @@ class PersonalWindow(QtWidgets.QFrame):
             print(f"選擇的儲存資料夾: {folder_path}")
             self.save_path_text['save_path'] = folder_path
             self.save_path_text['entry_save_path'].setText(folder_path)
+        
 
 
     def clear_data(self):
@@ -316,7 +317,12 @@ class PersonalWindow(QtWidgets.QFrame):
         data = self.get_data()
         df = pd.DataFrame([data])
 
+        if 'save_path' not in self.save_path_text:
+            print("請選擇儲存資料夾")
+            return
+        
         save_path = self.save_path_text['save_path']
+        print(save_path)
         file_exists = os.path.isfile(save_path + '/AD_patient_data.csv')
 
         if file_exists is True:

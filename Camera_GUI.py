@@ -1,7 +1,6 @@
 from PyQt6 import QtWidgets, QtCore, QtGui
 from widget_helper import label_setup, entry_setup, button_setup
 import sys
-import cv2
 
 
 class CameraWindow(QtWidgets.QFrame):
@@ -10,7 +9,7 @@ class CameraWindow(QtWidgets.QFrame):
         self.setWindowTitle("拍攝視窗")
         self.resize(900, 700)
         self.setStyleSheet("background-color: rgb(248, 249, 250);")
-        self.is_recording = False
+        self.save_path = {}
         self.ui()
         
 
@@ -59,6 +58,20 @@ class CameraWindow(QtWidgets.QFrame):
         
         
         #==== Create third layout ====#
+        self.entry_folder_frame = QtWidgets.QFrame()
+        self.entry_folder_layout = QtWidgets.QHBoxLayout(self.entry_folder_frame)
+        self.entry_folder_entry = QtWidgets.QLineEdit()
+        self.entry_folder_entry.setPlaceholderText("請選擇儲存資料夾")  # 設定提示文字
+        self.entry_folder_entry.setStyleSheet("background-color: rgb(255, 255, 255); border: 1.5px solid black; border-radius: 5px; color: rgb(0, 0, 0);" \
+        "font-size: 18px; font-family: 微軟正黑體; font-weight: bold")  # 設定字型大小
+        self.entry_folder_entry.setReadOnly(True)  # Set the entry to read-only
+        self.entry_folder_layout.addWidget(self.entry_folder_entry)
+
+        self.main_layout.addWidget(self.entry_folder_frame)
+        #==== Finish ====#
+        
+
+        #==== Create fourth layout ====#
         self.button_frame = QtWidgets.QFrame()
         # self.button_frame.setStyleSheet("background-color: #e0e0e0; border-radius: 8px;")
         self.button_layout = QtWidgets.QHBoxLayout(self.button_frame)
@@ -70,15 +83,17 @@ class CameraWindow(QtWidgets.QFrame):
         self.prev_button = button_setup("上一步", lambda: None)
         self.button_layout.addWidget(self.prev_button)
         
+        # Stop recording button
+        self.save_button = button_setup("選擇儲存資料夾", lambda: None)
+        # self.stop_button.setEnabled(False)  # Initially disabled
+        self.button_layout.addWidget(self.save_button)
+        self.save_path['save_path'] = self.save_button
+        
+
 
         # Record button
         self.record_button = button_setup("開始錄影", lambda: None)
         self.button_layout.addWidget(self.record_button)
-        
-        # Stop recording button
-        self.stop_button = button_setup("暫停錄影", lambda: None)
-        # self.stop_button.setEnabled(False)  # Initially disabled
-        self.button_layout.addWidget(self.stop_button)
         
         
         # Next button
@@ -88,17 +103,7 @@ class CameraWindow(QtWidgets.QFrame):
         # Add buttons frame to main layout
         self.main_layout.addWidget(self.button_frame)
 
-    # def record_button_clicked(self):
-    #     self.is_recording = True
-    #     self.record_button.setEnabled(False)
-    #     self.stop_button.setEnabled(True)
 
-    # def stop_button_clicked(self):
-    #     self.is_recording = False
-    #     self.record_button.setEnabled(True)
-    #     self.stop_button.setEnabled(False)
-
-    
         
 
   

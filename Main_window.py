@@ -1,4 +1,3 @@
-# from test import SecondWindow, ThirdWindow, FourthWindow, MainWindow
 from Personal_GUI import PersonalWindow
 from LEDPresenter import LEDPresenter
 from CameraPresenter import CameraPresenter
@@ -11,11 +10,12 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.window1 = PersonalWindow()
         self.window1.connect_next_second_button(self.show_second_window)
-        # arduino_controller = ArduinoController()
-        self.window2 = LEDPresenter(lambda: None)
+        arduino_controller = ArduinoController()
+        self.window2 = LEDPresenter(arduino_controller)
         self.window2.connect_next_third_button(self.show_third_window)
         self.window2.connect_back_first_button(self.back_to_first_window)
-        self.window3 = CameraPresenter(lambda: None)
+        self.window3 = CameraPresenter(arduino_controller)
+        self.window3.connect_back_second_button(self.back_to_second_window)
         
 
     def show(self): # 程式開始時顯示第一個視窗
@@ -41,6 +41,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def back_to_first_window(self):
         self.window2.hide()
         self.window1.show()
+
+    def back_to_second_window(self):
+        self.window3.hide()
+        self.window2.show()
 
 
 if __name__ == '__main__':

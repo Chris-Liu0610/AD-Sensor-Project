@@ -3,6 +3,7 @@
 import serial
 import serial.tools.list_ports
 import time
+from PyQt6 import QtCore
 
 
 class ArduinoController():
@@ -28,7 +29,8 @@ class ArduinoController():
     def send_command(self, command):
         if self.ser and self.ser.is_open:
             self.ser.write((command + '\n').encode('utf-8'))
-            time.sleep(0.5)
+            time.sleep(0.001)
+            
 
     # ===== 提供給 GUI 呼叫的控制函式 =====
     def start_led(self):

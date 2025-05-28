@@ -7,48 +7,10 @@ from LED import ArduinoController
 from Personal_GUI import PersonalWindow
 import os
 import time
-
 from threading import Thread
 from queue import Queue
 from multiprocessing import Process, Queue as MPQueue
 
-
-class TimeTesting:
-    def __init__(self):
-        self.start_time = time.time()
-
-    def start(self):
-        self.start_time = time.time()
-
-    def print_elapsed_time(self):
-        elapsed_time = time.time() - self.start_time
-        print(f"Elapsed time: {elapsed_time:.2f} seconds")
-
-    def reset(self):
-        self.start_time = time.time()
-
-# Evaluate the record frame rate is correct
-class FPSMeter:
-    def __init__(self):
-        self.start_time = time.time()
-        self.frame_count = 0
-
-    def update(self):
-        self.frame_count += 1
-        elapsed_time = time.time() - self.start_time
-        if elapsed_time >= 2.0:
-            self.start_time = time.time()
-            self.frame_count = 0
-
-    def print_fps(self):
-        elapsed_time = time.time() - self.start_time
-        fps = self.frame_count / elapsed_time if elapsed_time > 0 else 0
-        print(f"FPS: {fps:.2f}", end="\r", flush=True)
-
-    def fps(self):
-        elapsed_time = time.time() - self.start_time
-        fps = self.frame_count / elapsed_time if elapsed_time > 0 else 0
-        return fps if self.frame_count > 0 else 0
 
 
 class CameraPresenter:
@@ -68,6 +30,7 @@ class CameraPresenter:
         config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
         config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
         self.pipeline.start(config)
+        
 
         self.recorderType = False # 設定是否處於錄影狀態，預設 False
         self.ocv = True
@@ -80,9 +43,8 @@ class CameraPresenter:
         # 按鈕事件
         self.window_camera.record_button.clicked.connect(self.recordVideo)
         self.window_camera.save_button.clicked.connect(self.save_path)
+        self.window_camera.finish_button.clicked.connect(self.finish)
 
-        self.frame_rate = FPSMeter()  # 計算 FPS
-        self.time_testing = TimeTesting()  # 計算時間
 
         self.buffer = Queue(maxsize=360)  # 設定緩衝區大小
         self.workers = [
@@ -101,10 +63,6 @@ class CameraPresenter:
         for worker in self.workers:
             worker.start()
 
-        # 定時更新畫面
-        # self.timer = QtCore.QTimer()
-        # self.timer.timeout.connect(self.update_frame)
-        # self.timer.start(33)
 
 
     def recordVideo(self):
@@ -120,21 +78,17 @@ class CameraPresenter:
             video_path = os.path.join(self.output_path, f'{self.ID}.mp4')
             print(video_path)
             self.output = cv2.VideoWriter(video_path, self.fourcc, 30.0, (480, 640)) # 設定儲存影片的檔案
-            self.time_testing.start()  # 開始計時
             self.recorderType = True
             self.led_controller.start_led()
             self.window_camera.record_button.setText("錄影中，點擊停止錄影")
             self.led_controller.flash_led_3_times()
             QtCore.QTimer.singleShot(3000, lambda: self.led_controller.cycle_flash())
         else:
-            self.time_testing.print_elapsed_time()
             self.output.release()
             self.recorderType = False
             self.led_controller.exit_led()
             self.window_camera.record_button.setText("點擊開始錄影")
 
-    def update_fps(self): 
-        self.window_camera.fps_label.setText(f"FPS: {self.frame_rate.fps():.2f}")
 
     def _show_frame(self, face_cascade):
         while True:
@@ -153,8 +107,6 @@ class CameraPresenter:
 
     def update_frame(self):
 
-        # color_orig, color_img, depth_img, have_face = self.show_frame(self.face_cascade)
-        # color_orig, color_img, depth_img, have_face = self.get_frame()
         if not self.mp_queue.empty():
             color_orig, color_img, _, _ = self.mp_queue.get(timeout=0.2)
         else:
@@ -166,9 +118,6 @@ class CameraPresenter:
         if self.recorderType and self.output is not None:
             self.output.write(color_orig)
 
-        self.frame_rate.update()  # 更新 FPS 計算
-        # self.frame_rate.print_fps()  # 印出 FPS
-        self.window_camera.fps_label.setText(f"FPS: {self.frame_rate.fps():.2f}")
 
         # 顯示影像
         rgb_frame = cv2.cvtColor(color_img, cv2.COLOR_BGR2RGB)
@@ -181,6 +130,12 @@ class CameraPresenter:
         frames = self.pipeline.wait_for_frames()
         color_frame = frames.get_color_frame()
         depth_frame = frames.get_depth_frame()
+
+        # 找出相機內參數
+        # self.intrinsics = depth_frame.profile.as_video_stream_profile().intrinsics
+        # print(self.intrinsics)
+        # END
+
 
         if not color_frame or not depth_frame:
             return None, None, None, False
@@ -252,8 +207,7 @@ class CameraPresenter:
             self.led_controller.exit_led()
             self.led_controller.close()
 
-        if self.timer.isActive():
-            self.timer.stop()
+
         if self.output and self.output.isOpened():
             self.output.release()
             self.output = None
@@ -271,6 +225,13 @@ class CameraPresenter:
     def hide(self):
         self.window_camera.hide()
         self.window_camera.closeEvent = self.closeEvent
+
+
+    def finish(self):
+        self.window_camera.closeEvent = self.closeEvent
+        self.window_camera.close()
+        
+    
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

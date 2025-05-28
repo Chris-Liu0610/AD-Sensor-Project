@@ -147,13 +147,13 @@ class LEDWindow(QtWidgets.QFrame):
         grid8_box.setStyleSheet("")
         grid8_layout = QtWidgets.QGridLayout(grid8_box)
 
-        button_back = button_setup("上一步", lambda: print("上一步按鈕被點擊"))
+        button_back = button_setup("上一步", lambda: None)
         grid8_layout.addWidget(button_back, 0, 0, 1, 1)
         self.button_func['button_back'] = button_back
 
         grid8_layout.setSpacing(400)
 
-        button_next = button_setup("下一步", lambda: print("下一步按鈕被點擊"))
+        button_next = button_setup("下一步", lambda: None)
         grid8_layout.addWidget(button_next, 0, 1, 1, 1)
         self.button_func['button_next'] = button_next
         

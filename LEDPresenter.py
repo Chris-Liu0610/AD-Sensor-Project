@@ -17,10 +17,6 @@ class LEDPresenter:
         self.view.LED_cycle_flicker_button.clicked.connect(self.connect_LED_cycle_flicker)
         self.view.LED_stop_button.clicked.connect(self.connect_LED_stop)
 
-        # self.timer = QtCore.QTimer(self.view)
-        # self.timer.setInterval(500)
-        # self.timer.timeout.connect(self.update_LED_three_times)
-
     def connect_LED_work(self):
         self.view.button_func['state_circle'].setFixedSize(30,30)
         self.view.button_func['state_circle'].setStyleSheet("background-color: green; border-radius: 15px; border: 2px solid rgb(0, 0, 0);")
@@ -32,26 +28,19 @@ class LEDPresenter:
         self.view.button_func['state_circle'].setFixedSize(30,30)
         self.view.button_func['state_circle'].setStyleSheet("background-color: rgb(192, 192, 192); border-radius: 15px; border: 2px solid rgb(0, 0, 0);")
         self.led_controller.exit_led()
+
         self.view.test_record['record'].append("LED退出")
 
     def connect_LED_flicker_3times(self):
         
-        # self.count = 0
-        # self.view.LED_flicker_3times_button.setEnabled(False)
-        # self.update_LED_three_times()
-        # self.timer.start()
         self.led_controller.flash_led_3_times()
         self.view.test_record['record'].append("LED閃爍三次")
     
     def connect_LED_cycle_flicker(self):
-        # self.view.button_func['state_circle'].setFixedSize(30,30)
-        # self.view.button_func['show_circle_0'].setStyleSheet("background-color: white; border-radius: 15px; border: 2px solid rgb(0, 0, 0);")
         self.led_controller.cycle_flash()
         self.view.test_record['record'].append("LED循環閃爍")
 
     def connect_LED_stop(self):
-        # self.view.button_func['state_circle'].setFixedSize(30,30)
-        # self.view.button_func['show_circle_0'].setStyleSheet("background-color: white; border-radius: 15px; border: 2px solid rgb(0, 0, 0);")
         self.led_controller.stop_led()
         self.view.test_record['record'].append("LED停止")
 
@@ -60,6 +49,11 @@ class LEDPresenter:
 
     def connect_back_first_button(self, back_function):
         self.view.button_func['button_back'].clicked.connect(back_function)
+
+    def closeEvent(self, event):
+        if self.led_controller.is_running:
+            self.led_controller.close()
+            event.accept()
 
     def show(self):
         self.view.show()

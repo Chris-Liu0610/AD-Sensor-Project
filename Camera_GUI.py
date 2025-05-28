@@ -80,8 +80,8 @@ class CameraWindow(QtWidgets.QFrame):
         
         
         # Previous button
-        self.prev_button = button_setup("上一步", lambda: None)
-        self.button_layout.addWidget(self.prev_button)
+        self.back_button = button_setup("上一步", lambda: None)
+        self.button_layout.addWidget(self.back_button)
         
         # Stop recording button
         self.save_button = button_setup("選擇儲存資料夾", lambda: None)
@@ -97,8 +97,8 @@ class CameraWindow(QtWidgets.QFrame):
         
         
         # Next button
-        self.next_button = button_setup("下一步", lambda: None)
-        self.button_layout.addWidget(self.next_button)
+        self.finish_button = button_setup("完成", lambda: None)
+        self.button_layout.addWidget(self.finish_button)
         
         # Add buttons frame to main layout
         self.main_layout.addWidget(self.button_frame)

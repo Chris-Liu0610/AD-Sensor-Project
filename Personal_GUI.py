@@ -28,7 +28,7 @@ class PersonalWindow(QtWidgets.QFrame):
         grid1_box.setFixedHeight(40)
         self.grid1_layout = QtWidgets.QGridLayout(grid1_box)
         label_personal_data = label_setup("個人資料", None)
-        label_personal_data.setStyleSheet("font-size: 24px; font-family: 微軟正黑體; font-weight: bold; border: 0px;")
+        label_personal_data.setStyleSheet("font-size: 24px; font-family: 微軟正黑體; font-weight: bold; border: 0px; color: rgb(0, 0, 0);")
         self.grid1_layout.addWidget(label_personal_data, 0, 0)
         self.grid1_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.widgets['label_personal_data'] = label_personal_data
@@ -247,7 +247,7 @@ class PersonalWindow(QtWidgets.QFrame):
         self.grid10_layout.addWidget(button_save, 0, 2)
         self.widgets['button_save'] = button_save
 
-        button_next = button_setup("下一步", lambda: print("下一步按鈕被點擊"))
+        button_next = button_setup("下一步", lambda: None)
         self.grid10_layout.addWidget(button_next, 0, 3)
         self.widgets['button_next'] = button_next
         #==== Finish =====#    
@@ -262,7 +262,7 @@ class PersonalWindow(QtWidgets.QFrame):
 
         #==== Finally, add the grid layout to the main layout ====#
         self.main_layout.addWidget(grid1_box)
-        # content_layout.addWidget(grid1_box)
+        content_layout.addWidget(grid1_box)
         self.main_layout.addWidget(combine_layout2_layout3_box)
         content_layout.addWidget(combine_layout2_layout3_box)
         self.main_layout.addWidget(combine_layout4_layout5_box)

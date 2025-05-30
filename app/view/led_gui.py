@@ -1,12 +1,16 @@
-import os
-import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
+    QFrame,
+    QGridLayout,
+    QTextEdit,
+    QVBoxLayout,
+    QWidget
+)
 
-from PyQt6 import QtWidgets, QtGui, QtCore
-from utils.widget_helper import label_setup, entry_setup, date_setup, button_setup
+from utils.widget_helper import label_setup, button_setup
 
 
-class LEDWindow(QtWidgets.QFrame):
+class LEDWindow(QFrame):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("LED檢視")
@@ -17,28 +21,28 @@ class LEDWindow(QtWidgets.QFrame):
         self.setup_ui()
 
     def setup_ui(self):
-        self.main_layout = QtWidgets.QVBoxLayout(self)
+        self.main_layout = QVBoxLayout(self)
         # self.main_layout.setSpacing(10)
 
         #==== Create first grid layout ====#
-        grid1_box = QtWidgets.QWidget()
+        grid1_box = QWidget()
         grid1_box.setStyleSheet("")
         grid1_box.setFixedHeight(40)
-        grid1_layout = QtWidgets.QGridLayout(grid1_box)
+        grid1_layout = QGridLayout(grid1_box)
         label_LED = label_setup("LED檢視", lambda: None)
         label_LED.setStyleSheet("font-size: 24px; font-weight: bold; color: rgb(0, 0, 0); border: 0px;")
         grid1_layout.addWidget(label_LED, 0, 0)
-        grid1_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        grid1_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         #==== Finish ====#
 
         #===== Create second grid layout =====#
-        grid2_box = QtWidgets.QWidget()
+        grid2_box = QWidget()
         grid2_box.setStyleSheet("border: 0px;")
         grid2_box.setFixedHeight(60)
-        grid2_layout = QtWidgets.QGridLayout(grid2_box)
+        grid2_layout = QGridLayout(grid2_box)
         
         label_LED_state = label_setup("LED狀態 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
-        label_LED_state.setAlignment(QtCore.Qt.AlignmentFlag.AlignVCenter)
+        label_LED_state.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         label_LED_state.setFixedWidth(100)
         grid2_layout.addWidget(label_LED_state, 0, 0)
         state_circle = label_setup("", lambda: None)
@@ -48,9 +52,9 @@ class LEDWindow(QtWidgets.QFrame):
         grid2_layout.addWidget(state_circle, 0, 1, 1, 3)
         
         #===== Create third grid layout =====#
-        grid3_box = QtWidgets.QWidget()
+        grid3_box = QWidget()
         grid3_box.setStyleSheet("border: 0px solid rgb(0, 0, 0);")
-        grid3_layout = QtWidgets.QGridLayout(grid3_box)
+        grid3_layout = QGridLayout(grid3_box)
 
         self.LED_start_button = button_setup("LED開始運作", lambda: None)
         grid3_layout.addWidget(self.LED_start_button, 0, 0, 1, 2)
@@ -69,29 +73,29 @@ class LEDWindow(QtWidgets.QFrame):
         #==== Finish ====#
         
         #===== Create combine second and third grid layout =====#
-        combine_layout2_layout3_box = QtWidgets.QWidget()
+        combine_layout2_layout3_box = QWidget()
         combine_layout2_layout3_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border: 2px solid rgb(0, 0, 0);")
-        combine_layout2_layout3 = QtWidgets.QVBoxLayout(combine_layout2_layout3_box)
+        combine_layout2_layout3 = QVBoxLayout(combine_layout2_layout3_box)
         combine_layout2_layout3.addWidget(grid2_box)
         combine_layout2_layout3.addWidget(grid3_box)
         #==== Finish ====#
         
         #==== Create fourth grid layout ====#
-        # grid4_box = QtWidgets.QWidget()
+        # grid4_box = QWidget()
         # grid4_box.setStyleSheet("")
         # grid4_box.setFixedHeight(40)
-        # grid4_layout = QtWidgets.QGridLayout(grid4_box)
+        # grid4_layout = QGridLayout(grid4_box)
 
         # label_LED_show = label_setup("LED顯示 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
-        # label_LED_show.setAlignment(QtCore.Qt.AlignmentFlag.AlignVCenter)
+        # label_LED_show.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         # label_LED_show.setFixedWidth(100)
         # grid4_layout.addWidget(label_LED_show, 0, 0, 1, 4)
         #==== Finish ====#
 
         # #==== Create fifth grid layout ====#
-        # grid5_box = QtWidgets.QWidget()
+        # grid5_box = QWidget()
         # grid5_box.setStyleSheet("border: 2px solid rgb(0, 0, 0);")
-        # grid5_layout = QtWidgets.QGridLayout(grid5_box)
+        # grid5_layout = QGridLayout(grid5_box)
         
         # LED_number = 27
         # column = 9
@@ -106,27 +110,27 @@ class LEDWindow(QtWidgets.QFrame):
         # #==== Finish ====#
         
         #==== Create combine fourth and fifth grid layout ====#
-        # combine_layout4_layout5_box = QtWidgets.QWidget()
+        # combine_layout4_layout5_box = QWidget()
         # combine_layout4_layout5_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px;")
-        # combine_layout4_layout5 = QtWidgets.QVBoxLayout(combine_layout4_layout5_box)
+        # combine_layout4_layout5 = QVBoxLayout(combine_layout4_layout5_box)
         # combine_layout4_layout5.addWidget(grid4_box)
         # combine_layout4_layout5.addWidget(grid5_box)
         #==== Finish ====#
 
         #==== Create sixth grid layout ====#
-        grid6_box = QtWidgets.QWidget()
+        grid6_box = QWidget()
         grid6_box.setStyleSheet("border: 0px;")
         grid6_box.setFixedHeight(40)
-        grid6_layout = QtWidgets.QGridLayout(grid6_box)
+        grid6_layout = QGridLayout(grid6_box)
         label_test_record = label_setup("測試紀錄 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         grid6_layout.addWidget(label_test_record, 0, 0, 1, 4)
         #==== Finish ====#
 
         #==== Create seventh grid layout ====#
-        grid7_box = QtWidgets.QWidget()
+        grid7_box = QWidget()
         grid7_box.setStyleSheet("border: 0px solid rgb(0, 0, 0);")
-        grid7_layout = QtWidgets.QGridLayout(grid7_box)
-        self.entry_test_record = QtWidgets.QTextEdit(self)
+        grid7_layout = QGridLayout(grid7_box)
+        self.entry_test_record = QTextEdit(self)
         self.entry_test_record.setReadOnly(True)
         self.entry_test_record.setStyleSheet("background-color: rgb(255, 255, 255); font-size: 14px; font-family: 微軟正黑體; font-weight: bold; border: 0px; border-radius: 10px; color: rgb(0, 0, 0);")
         self.test_record['record'] = self.entry_test_record
@@ -134,17 +138,17 @@ class LEDWindow(QtWidgets.QFrame):
         #==== Finish ====#
         
         #==== Create combine sixth and seventh grid layout ====#
-        combine_layout6_layout7_box = QtWidgets.QWidget()
+        combine_layout6_layout7_box = QWidget()
         combine_layout6_layout7_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border: 2px solid rgb(0, 0, 0);")
-        combine_layout6_layout7 = QtWidgets.QVBoxLayout(combine_layout6_layout7_box)
+        combine_layout6_layout7 = QVBoxLayout(combine_layout6_layout7_box)
         combine_layout6_layout7.addWidget(grid6_box)
         combine_layout6_layout7.addWidget(grid7_box)
         #==== Finish ====#
 
         #==== Create eighth grid layout ====#
-        grid8_box = QtWidgets.QWidget()
+        grid8_box = QWidget()
         grid8_box.setStyleSheet("")
-        grid8_layout = QtWidgets.QGridLayout(grid8_box)
+        grid8_layout = QGridLayout(grid8_box)
 
         button_back = button_setup("上一步", lambda: None)
         grid8_layout.addWidget(button_back, 0, 0, 1, 1)
@@ -166,13 +170,3 @@ class LEDWindow(QtWidgets.QFrame):
         self.main_layout.addWidget(grid8_box)
         #===== Finish =====#
 
-
-
-    
-
-
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    window = LEDWindow()
-    window.show()
-    sys.exit(app.exec())

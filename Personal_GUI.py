@@ -173,7 +173,7 @@ class PersonalWindow(QtWidgets.QFrame):
         self.grid7_layout.addWidget(entry_medical_history, 0, 1, 1, 3)
         self.widgets['entry_medical_history'] = entry_medical_history
 
-        label_allergic_medications = label_setup("過敏藥物 : :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
+        label_allergic_medications = label_setup("過敏藥物 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         label_allergic_medications.setFixedWidth(80)
         self.grid7_layout.addWidget(label_allergic_medications, 1, 0)
         entry_medication_allergic_medications = entry_setup("請輸入過敏藥物", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")

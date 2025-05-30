@@ -75,7 +75,7 @@ class CameraPresenter:
                 print("請選擇儲存路徑")
                 return
 
-            video_path = os.path.join(self.output_path, f'{self.ID}.mp4')
+            video_path = os.path.join(self.output_path, f'{self.ID}1.mp4')
             print(video_path)
             self.output = cv2.VideoWriter(video_path, self.fourcc, 30.0, (480, 640)) # 設定儲存影片的檔案
             self.recorderType = True
@@ -149,7 +149,7 @@ class CameraPresenter:
        
         x_center = int(color_image.shape[1] / 2)
         y_center = int(color_image.shape[0] / 2)
-        square_size = 80
+        square_size = 40
         cv2.rectangle(color_image,
                     (x_center - square_size, y_center - square_size),
                     (x_center + square_size, y_center + square_size),

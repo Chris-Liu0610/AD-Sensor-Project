@@ -1,6 +1,25 @@
 import sys
 from PyQt6 import QtWidgets, QtGui, QtCore
 
+
+class QDateEditNoWheel(QtWidgets.QDateEdit):
+    """
+    A custom QDateEdit that disables the mouse wheel event to prevent date changes
+    when scrolling the mouse wheel.
+    """
+    def wheelEvent(self, event):
+        pass
+
+class QComboBoxNoWheel(QtWidgets.QComboBox):
+    """
+    A custom QComboBox that disables the mouse wheel event to prevent scrolling through items
+    when using the mouse wheel.
+    """
+    def wheelEvent(self, event):
+        pass
+
+
+
 #===== 標籤設定 =====#
 def label_setup(text, font_Set):
     label = QtWidgets.QLabel(text)
@@ -17,7 +36,7 @@ def entry_setup(prompt_text, font_Set):
 
 #===== 下拉選單設定 =====#
 def combobox_setup(items, font_set):
-    comboBox = QtWidgets.QComboBox()
+    comboBox = QComboBoxNoWheel()
     comboBox.setStyleSheet(f'{font_set}; background-color: rgb(255, 255, 255); border: 1px solid black; border-radius: 5px; color: rgb(0, 0, 0)')  # 設定字型大小
     comboBox.addItems(items)
     comboBox.setCurrentIndex(0)  # 設定預設選項
@@ -25,7 +44,7 @@ def combobox_setup(items, font_set):
 
 #===== 日期選擇器設定 =====#
 def date_setup(Form, font_Set):
-    date = QtWidgets.QDateEdit(Form)  # 建立日期調整元件
+    date = QDateEditNoWheel(Form)  # 建立日期調整元件
     date.setDisplayFormat('yyyy-MM-dd')  # 設定顯示格式
     date.setDate(QtCore.QDate.currentDate())
     date.setKeyboardTracking(False)

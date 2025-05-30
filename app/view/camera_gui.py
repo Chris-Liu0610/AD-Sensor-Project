@@ -1,6 +1,4 @@
-import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
 from PyQt6 import QtWidgets, QtCore
 from utils.widget_helper import label_setup, button_setup
@@ -13,9 +11,9 @@ class CameraWindow(QtWidgets.QFrame):
         self.resize(900, 700)
         self.setStyleSheet("background-color: rgb(248, 249, 250);")
         self.save_path = {}
-        self.ui()
+        self.setup_ui()
         
-    def ui(self):
+    def setup_ui(self):
         # Main layout
         self.main_layout = QtWidgets.QVBoxLayout(self)
         self.main_layout.setContentsMargins(20, 20, 20, 20)

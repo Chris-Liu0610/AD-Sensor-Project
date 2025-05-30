@@ -8,6 +8,7 @@ from PyQt6.QtWidgets import (
     QFileDialog,
     QFrame,
     QGridLayout,
+    QHBoxLayout,
     QLineEdit,
     QScrollArea,
     QVBoxLayout,
@@ -250,25 +251,21 @@ class PersonalWindow(QFrame):
 
         #===== Create tenth grid layout =====#
         grid10_box = QWidget()
-        # grid5_box.setFixedHeight(60)
-        self.grid10_layout = QGridLayout(grid10_box)
+        self.grid10_layout = QHBoxLayout(grid10_box)
         self.grid10_layout.setSpacing(15)
 
         button_save_folder = button_setup("選擇儲存資料夾", self.open_save_folder)
-        self.grid10_layout.addWidget(button_save_folder, 0, 0)
+        self.grid10_layout.addWidget(button_save_folder)
 
 
         button_clear = button_setup("清除", self.clear_data)
-        self.grid10_layout.addWidget(button_clear, 0, 1)
+        self.grid10_layout.addWidget(button_clear)
         self.widgets['button_clear'] = button_clear
 
         button_save = button_setup("儲存", self.save_data)
-        self.grid10_layout.addWidget(button_save, 0, 2)
+        self.grid10_layout.addWidget(button_save)
         self.widgets['button_save'] = button_save
 
-        button_next = button_setup("下一步", lambda: None)
-        self.grid10_layout.addWidget(button_next, 0, 3)
-        self.widgets['button_next'] = button_next
         #==== Finish =====#    
 
         #===== Create scroll area =====#
@@ -297,7 +294,6 @@ class PersonalWindow(QFrame):
     
     def connect_next_second_button(self, function):
         self.widgets['button_next'].clicked.connect(function)
-
 
     def get_data(self):
         data = {}

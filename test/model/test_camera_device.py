@@ -4,10 +4,10 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'app'))
 
 
-def test_camera_gui():
+def test_camera_device():
     pass
     
 
 
 if __name__ == "__main__":
-    test_camera_gui()
+    test_camera_device()

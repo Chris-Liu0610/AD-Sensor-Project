@@ -1,10 +1,17 @@
 import sys
 
-from PyQt6 import QtWidgets, QtCore
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
+    QFrame,
+    QHBoxLayout,
+    QLineEdit,
+    QVBoxLayout,
+    QWidget
+)
 from utils.widget_helper import label_setup, button_setup
 
 
-class CameraWindow(QtWidgets.QFrame):
+class CameraWindow(QFrame):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("拍攝視窗")
@@ -15,38 +22,38 @@ class CameraWindow(QtWidgets.QFrame):
         
     def setup_ui(self):
         # Main layout
-        self.main_layout = QtWidgets.QVBoxLayout(self)
+        self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(20, 20, 20, 20)
         self.main_layout.setSpacing(15)
         
         #==== Create first layout ====#
-        self.grid1_box = QtWidgets.QWidget()
+        self.grid1_box = QWidget()
         self.grid1_box.setStyleSheet("")
-        self.grid1_layout = QtWidgets.QHBoxLayout(self.grid1_box)
+        self.grid1_layout = QHBoxLayout(self.grid1_box)
         self.title_label = label_setup("Camera", lambda: None)
         self.title_label.setStyleSheet("font-size: 24px; font-weight: bold; color: rgb(0, 0, 0); border: 0px;")
-        self.title_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.grid1_layout.addWidget(self.title_label)
 
         self.main_layout.addWidget(self.grid1_box)
         #==== Finish ====#
         
         #==== Create second layout ====#
-        self.layout2_box = QtWidgets.QWidget()
+        self.layout2_box = QWidget()
         self.layout2_box.setStyleSheet("")
-        self.layout2_layout = QtWidgets.QHBoxLayout(self.layout2_box)
+        self.layout2_layout = QHBoxLayout(self.layout2_box)
 
-        self.camera_frame = QtWidgets.QFrame()
+        self.camera_frame = QFrame()
         self.camera_frame.setStyleSheet("background-color: rgb(51, 51, 51); border-radius: 8px; ")
-        self.camera_frame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel) # 畫矩形面板，會依據目前的GUI主題自動調整
-        self.camera_frame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+        self.camera_frame.setFrameShape(QFrame.Shape.StyledPanel) # 畫矩形面板，會依據目前的GUI主題自動調整
+        self.camera_frame.setFrameShadow(QFrame.Shadow.Raised)
         
-        self.camera_layout = QtWidgets.QVBoxLayout(self.camera_frame)
+        self.camera_layout = QVBoxLayout(self.camera_frame)
         self.camera_layout.setContentsMargins(10, 10, 10, 10)
         
         self.camera_label = label_setup("", lambda: None)
         self.camera_label.setStyleSheet("background-color: black; border-radius: 4px;")
-        self.camera_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.camera_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.camera_label.setMinimumHeight(500)
         self.camera_layout.addWidget(self.camera_label)
         
@@ -57,9 +64,9 @@ class CameraWindow(QtWidgets.QFrame):
         
         
         #==== Create third layout ====#
-        self.entry_folder_frame = QtWidgets.QFrame()
-        self.entry_folder_layout = QtWidgets.QHBoxLayout(self.entry_folder_frame)
-        self.entry_folder_entry = QtWidgets.QLineEdit()
+        self.entry_folder_frame = QFrame()
+        self.entry_folder_layout = QHBoxLayout(self.entry_folder_frame)
+        self.entry_folder_entry = QLineEdit()
         self.entry_folder_entry.setPlaceholderText("請選擇儲存資料夾")  # 設定提示文字
         self.entry_folder_entry.setStyleSheet("background-color: rgb(255, 255, 255); border: 1.5px solid black; border-radius: 5px; color: rgb(0, 0, 0);" \
         "font-size: 18px; font-family: 微軟正黑體; font-weight: bold")  # 設定字型大小
@@ -71,9 +78,9 @@ class CameraWindow(QtWidgets.QFrame):
         
 
         #==== Create fourth layout ====#
-        self.button_frame = QtWidgets.QFrame()
+        self.button_frame = QFrame()
         # self.button_frame.setStyleSheet("background-color: #e0e0e0; border-radius: 8px;")
-        self.button_layout = QtWidgets.QHBoxLayout(self.button_frame)
+        self.button_layout = QHBoxLayout(self.button_frame)
         self.button_layout.setContentsMargins(10, 10, 10, 10)
         # self.button_layout.setSpacing(15)
         
@@ -101,15 +108,3 @@ class CameraWindow(QtWidgets.QFrame):
         
         # Add buttons frame to main layout
         self.main_layout.addWidget(self.button_frame)
-
-
-        
-
-  
-            
-
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    Form = CameraWindow()
-    Form.show()
-    sys.exit(app.exec())

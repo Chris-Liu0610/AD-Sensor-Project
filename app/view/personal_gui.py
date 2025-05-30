@@ -31,9 +31,9 @@ class PersonalWindow(QFrame):
         self.setStyleSheet("background-color: rgb(248, 249, 250);")
         self.resize(800, 600)
         self.widgets = {}
-        self.ui()
+        self.setup_ui()
 
-    def ui(self):
+    def setup_ui(self):
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setSpacing(10)
         

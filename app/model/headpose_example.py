@@ -36,6 +36,23 @@ class FacePoseDetector:
             'forehead': 10          # 額頭中心
         }
 
+        self.face_3d_model = {
+            'nose_tip': [0.0, 0.0, 0.0],
+            'chin': [0.0, -6, -3.0],
+            'left_eye_corner': [3.5, 4, -3.0],
+            'right_eye_corner': [-3.5, 4, -3.0],
+            'left_mouth_corner': [2.5, -1, -2.0],
+            'right_mouth_corner': [-2.5, -1, -2.0],
+            'forehead': [0.0, 6, -3.0]
+        }
+
+    def set_face_3d_model(self, model):
+        """設置自定義的人臉3D模型"""
+        if isinstance(model, dict):
+            self.face_3d_model = model
+        else:
+            raise ValueError("Model must be a dictionary with 3D points.")
+
 
     def setup_camera_matrix(self, image_width, image_height):
         """設置相機矩陣（如果沒有標定數據，使用估計值）"""
@@ -55,20 +72,11 @@ class FacePoseDetector:
     def get_face_3d_model(self):
         """獲取標準人臉3D模型的關鍵點（單位：cm）"""
         # 基於平均人臉尺寸的3D模型點，往右為負，往左為正，往下為負，往上為正
-        face_3d_model = {
-            'nose_tip': [0.0, 0.0, 0.0],
-            'chin': [0.0, -6, -3.0],
-            'left_eye_corner': [3.5, 4, -3.0],
-            'right_eye_corner': [-3.5, 4, -3.0],
-            'left_mouth_corner': [2.5, -1, -2.0],
-            'right_mouth_corner': [-2.5, -1, -2.0],
-            'forehead': [0.0, 6, -3.0]
-        }
         
         # 轉換為numpy數組
         points_3d = [] 
         for key in self.pose_landmarks_indices.keys():
-            points_3d.append(face_3d_model[key])
+            points_3d.append(self.face_3d_model[key])
         
         return np.array(points_3d, dtype=np.float32)
         
@@ -231,11 +239,7 @@ class FacePoseDetector:
         r = R.from_matrix(rmat)
         angle = r.as_euler('xyz', degrees=True)
         # print(rvec)
-        print(angle)
-        
-
-
-
+        # print(angle)
         return angle
     
     def annotate_image(self, image, rvec, tvec, nose_tip_2d):

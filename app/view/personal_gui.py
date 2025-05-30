@@ -31,28 +31,21 @@ class PersonalWindow(QFrame):
         self.setStyleSheet("background-color: rgb(248, 249, 250);")
         self.resize(800, 600)
         self.widgets = {}
+        self.frames = {}
         self.setup_ui()
 
     def setup_ui(self):
-        self.main_layout = QVBoxLayout(self)
-        self.main_layout.setSpacing(10)
         
-        content_widget = QWidget()
-        content_layout = QVBoxLayout(content_widget)
-        content_layout.setSpacing(10)
-        
-        #===== Create first gird layout =====#
-        grid1_box = QWidget()
-        grid1_box.setStyleSheet("")
-        grid1_box.setFixedHeight(40)
-        self.grid1_layout = QGridLayout(grid1_box)
+        self.frames['title'] = QWidget()
+        self.frames['title'].setStyleSheet("")
+        self.frames['title'].setFixedHeight(40)
+        self.grid1_layout = QGridLayout(self.frames['title'])
         label_personal_data = label_setup("個人資料", None)
         label_personal_data.setStyleSheet("font-size: 24px; font-family: 微軟正黑體; font-weight: bold; border: 0px; color: rgb(0, 0, 0);")
         self.grid1_layout.addWidget(label_personal_data, 0, 0)
         self.grid1_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.widgets['label_personal_data'] = label_personal_data
         
-        #===== Finish =====#
 
         #===== Create second gird layout =====#
         grid2_box = QWidget()
@@ -249,7 +242,6 @@ class PersonalWindow(QFrame):
         self.combine_layout8_layout9.addWidget(grid9_layout_box)
         #==== Finish ====#
 
-        #===== Create tenth grid layout =====#
         grid10_box = QWidget()
         self.grid10_layout = QHBoxLayout(grid10_box)
         self.grid10_layout.setSpacing(15)
@@ -264,31 +256,27 @@ class PersonalWindow(QFrame):
         button_save = button_setup("儲存", self.save_data)
         self.grid10_layout.addWidget(button_save)
         self.widgets['button_save'] = button_save
-        #==== Finish =====#    
+ 
 
-        #===== Create scroll area =====#
+        self.main_layout = QVBoxLayout(self)
+        content_widget = QWidget()
+        content_layout = QVBoxLayout(content_widget)
+        content_layout.addWidget(self.frames['title'])
+        content_layout.addWidget(combine_layout2_layout3_box)
+        content_layout.addWidget(combine_layout4_layout5_box)
+        content_layout.addWidget(combine_layout6_layout7_box)
+        content_layout.addWidget(combine_layout8_layout9_box)
+        content_layout.addWidget(grid10_box)
+        content_layout.setSpacing(10)
+
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(content_widget)
         scroll_area.setStyleSheet("border: 0px;")
         scroll_area.setFixedHeight(650)
-        #===== Finish =====#
-
-        #==== Finally, add the grid layout to the main layout ====#
-        self.main_layout.addWidget(grid1_box)
-        content_layout.addWidget(grid1_box)
-        self.main_layout.addWidget(combine_layout2_layout3_box)
-        content_layout.addWidget(combine_layout2_layout3_box)
-        self.main_layout.addWidget(combine_layout4_layout5_box)
-        content_layout.addWidget(combine_layout4_layout5_box)
-        self.main_layout.addWidget(combine_layout6_layout7_box)
-        content_layout.addWidget(combine_layout6_layout7_box)
-        self.main_layout.addWidget(combine_layout8_layout9_box)
-        content_layout.addWidget(combine_layout8_layout9_box)
-        self.main_layout.addWidget(grid10_box)
-        content_layout.addWidget(grid10_box)
+    
         self.main_layout.addWidget(scroll_area)
-        #===== Finish =====#
+
 
     def get_data(self):
         data = {}

@@ -31,7 +31,6 @@ class PersonalWindow(QFrame):
         self.setStyleSheet("background-color: rgb(248, 249, 250);")
         self.resize(800, 600)
         self.widgets = {}
-        # self.save_path_text = {}
         self.ui()
 
     def ui(self):
@@ -290,9 +289,6 @@ class PersonalWindow(QFrame):
         content_layout.addWidget(grid10_box)
         self.main_layout.addWidget(scroll_area)
         #===== Finish =====#
-    
-    def connect_next_second_button(self, function):
-        self.widgets['button_next'].clicked.connect(function)
 
     def get_data(self):
         data = {}

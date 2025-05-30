@@ -7,7 +7,10 @@ from PyQt6.QtWidgets import (
     QLineEdit
 )
 
-from widget.custom import QDateEditNoWheel
+from widget.custom import (
+    QDateEditNoWheel,
+    QComboBoxNoWheel
+)
 
 
 #===== 標籤設定 =====#
@@ -25,7 +28,7 @@ def entry_setup(prompt_text, font_Set):
 
 #===== 下拉選單設定 =====#
 def combobox_setup(items, font_set):
-    comboBox = QComboBox()
+    comboBox = QComboBoxNoWheel()
     comboBox.setStyleSheet(f'{font_set}; background-color: rgb(255, 255, 255); border: 1px solid black; border-radius: 5px; color: rgb(0, 0, 0)')  # 設定字型大小
     comboBox.addItems(items)
     comboBox.setCurrentIndex(0)  # 設定預設選項

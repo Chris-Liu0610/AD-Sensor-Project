@@ -68,18 +68,12 @@ class CameraWindow(QFrame):
         self.button_frame = QFrame()
         self.button_layout = QHBoxLayout(self.button_frame)
         self.button_layout.setContentsMargins(10, 10, 10, 10)
-
-        self.back_button = button_setup("上一步", lambda: None)
-        self.button_layout.addWidget(self.back_button)
         
-        self.save_button = button_setup("選擇儲存資料夾", lambda: None)
+        self.save_button = button_setup("選擇儲存資料夾", lambda: print("選擇儲存資料夾按鈕被點擊"))
         self.button_layout.addWidget(self.save_button)
         self.save_path['save_path'] = self.save_button
         
-        self.record_button = button_setup("開始錄影", lambda: None)
+        self.record_button = button_setup("開始錄影", lambda: print("開始錄影按鈕被點擊"))
         self.button_layout.addWidget(self.record_button)
-        
-        self.finish_button = button_setup("完成", lambda: None)
-        self.button_layout.addWidget(self.finish_button)
         
         self.main_layout.addWidget(self.button_frame)

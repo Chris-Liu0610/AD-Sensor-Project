@@ -336,3 +336,47 @@ classDiagram
     IRecorderInterface <.. CameraModel : Model interacts with Interface
     IAnalyzerInterface <.. AnalysisModel : Model interacts with Interface
 ```
+
+
+
+```mermaid
+graph TB
+    subgraph "MVP Architecture"
+        V[View<br/>- User Interface<br/>- Display Data<br/>- Capture User Input<br/>- Passive Component]
+        P[Presenter<br/>- Business Logic<br/>- Mediates View & Model<br/>- Handles User Actions<br/>- Updates View]
+        M[Model<br/>- Data Layer<br/>- Business Rules<br/>- Data Validation<br/>- Database Operations]
+    end
+    
+    subgraph "External Components"
+        U[User]
+        DB[(Database)]
+        API[External APIs]
+    end
+    
+    %% User interactions
+    U -->|User Input| V
+    V -->|Display UI| U
+    
+    %% MVP interactions
+    V -->|User Events| P
+    P -->|Update UI| V
+    P -->|Request Data| M
+    M -->|Return Data| P
+    
+    %% External data sources
+    M -->|Query/Update| DB
+    M -->|API Calls| API
+    DB -->|Data| M
+    API -->|Response| M
+    
+    %% Styling
+    classDef viewStyle fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef presenterStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef modelStyle fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef externalStyle fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    class V viewStyle
+    class P presenterStyle
+    class M modelStyle
+    class U,DB,API externalStyle
+```

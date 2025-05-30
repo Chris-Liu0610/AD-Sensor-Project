@@ -31,7 +31,7 @@ class PersonalWindow(QFrame):
         self.setStyleSheet("background-color: rgb(248, 249, 250);")
         self.resize(800, 600)
         self.widgets = {}
-        self.save_path_text = {}
+        # self.save_path_text = {}
         self.ui()
 
     def ui(self):
@@ -238,7 +238,8 @@ class PersonalWindow(QFrame):
         entry_save_path = entry_setup("請選擇儲存資料夾", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;") 
         entry_save_path.setReadOnly(True)
         self.grid9_layout.addWidget(entry_save_path, 1, 0, 1, 4)
-        self.save_path_text['entry_save_path'] = entry_save_path
+        # self.save_path_text['entry_save_path'] = entry_save_path
+        self.widgets['entry_save_path'] = entry_save_path
         #==== Finish =====#
 
         #===== Create combine eighth and ninth gird layout =====#
@@ -257,7 +258,6 @@ class PersonalWindow(QFrame):
         button_save_folder = button_setup("選擇儲存資料夾", self.open_save_folder)
         self.grid10_layout.addWidget(button_save_folder)
 
-
         button_clear = button_setup("清除", self.clear_data)
         self.grid10_layout.addWidget(button_clear)
         self.widgets['button_clear'] = button_clear
@@ -265,7 +265,6 @@ class PersonalWindow(QFrame):
         button_save = button_setup("儲存", self.save_data)
         self.grid10_layout.addWidget(button_save)
         self.widgets['button_save'] = button_save
-
         #==== Finish =====#    
 
         #===== Create scroll area =====#
@@ -312,9 +311,8 @@ class PersonalWindow(QFrame):
         folder_path = QFileDialog.getExistingDirectory()
         if folder_path:
             print(f"選擇的儲存資料夾: {folder_path}")
-            self.save_path_text['save_path'] = folder_path
-            self.save_path_text['entry_save_path'].setText(folder_path)
-        
+            self.widgets['entry_save_path'].setText(folder_path)
+
     def clear_data(self):
         for key, widget in self.widgets.items():
             if isinstance(widget, QLineEdit):

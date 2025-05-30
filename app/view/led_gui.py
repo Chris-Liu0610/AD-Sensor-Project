@@ -14,13 +14,9 @@ class LEDWindow(QtWidgets.QFrame):
         self.setFixedSize(800, 600)
         self.button_func = {}
         self.test_record = {}
-        # self.LED_color = {'LED_color':['#FF0000', '#FF1500', '#FF2A00', '#FF3F00', '#FF5400', '#FF6A00', '#FF7F00'
-        #                                , '#FF9400', '#FFAA00', '#FFBF00', '#FFD400', '#FFE900', '#FFFF00', '#E9FF00'
-        #                                , '#D4FF00', '#BFFF00', '#AAFF00', '#94FF00', '#7FFF00', '#6AFF00', '#54FF00'
-        #                                , '#3FFF00', '#2AFF00', '#15FF00', '#00FF00', '#00FF15', '#00FF2A']}
-        self.ui()
+        self.setup_ui()
 
-    def ui(self):
+    def setup_ui(self):
         self.main_layout = QtWidgets.QVBoxLayout(self)
         # self.main_layout.setSpacing(10)
 

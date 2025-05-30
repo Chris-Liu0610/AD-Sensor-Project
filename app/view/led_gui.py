@@ -80,43 +80,6 @@ class LEDWindow(QFrame):
         combine_layout2_layout3.addWidget(grid3_box)
         #==== Finish ====#
         
-        #==== Create fourth grid layout ====#
-        # grid4_box = QWidget()
-        # grid4_box.setStyleSheet("")
-        # grid4_box.setFixedHeight(40)
-        # grid4_layout = QGridLayout(grid4_box)
-
-        # label_LED_show = label_setup("LED顯示 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
-        # label_LED_show.setAlignment(Qt.AlignmentFlag.AlignVCenter)
-        # label_LED_show.setFixedWidth(100)
-        # grid4_layout.addWidget(label_LED_show, 0, 0, 1, 4)
-        #==== Finish ====#
-
-        # #==== Create fifth grid layout ====#
-        # grid5_box = QWidget()
-        # grid5_box.setStyleSheet("border: 2px solid rgb(0, 0, 0);")
-        # grid5_layout = QGridLayout(grid5_box)
-        
-        # LED_number = 27
-        # column = 9
-        # for i in range(LED_number):
-        #     row = i // column
-        #     col = i % column
-        #     show_circle = label_setup("", lambda: None)
-        #     show_circle.setFixedSize(30, 30)
-        #     show_circle.setStyleSheet("background-color: rgb(192, 192, 192); border-radius: 15px; border: 2px solid rgb(0, 0, 0);")
-        #     grid5_layout.addWidget(show_circle, row, col)  # Start from row 1 to leave space for the label
-        #     self.button_func[f'show_circle_{i}'] = show_circle
-        # #==== Finish ====#
-        
-        #==== Create combine fourth and fifth grid layout ====#
-        # combine_layout4_layout5_box = QWidget()
-        # combine_layout4_layout5_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px;")
-        # combine_layout4_layout5 = QVBoxLayout(combine_layout4_layout5_box)
-        # combine_layout4_layout5.addWidget(grid4_box)
-        # combine_layout4_layout5.addWidget(grid5_box)
-        #==== Finish ====#
-
         #==== Create sixth grid layout ====#
         grid6_box = QWidget()
         grid6_box.setStyleSheet("border: 0px;")

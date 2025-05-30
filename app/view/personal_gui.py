@@ -36,18 +36,19 @@ class PersonalWindow(QFrame):
 
     def setup_ui(self):
         
-        self.frames['title'] = QWidget()
-        self.frames['title'].setStyleSheet("")
-        self.frames['title'].setFixedHeight(40)
-        self.grid1_layout = QGridLayout(self.frames['title'])
+        # Frame for title
+        grid1_box = QWidget()
+        grid1_box.setStyleSheet("")
+        grid1_box.setFixedHeight(40)
+        self.grid1_layout = QGridLayout(grid1_box)
         label_personal_data = label_setup("個人資料", None)
         label_personal_data.setStyleSheet("font-size: 24px; font-family: 微軟正黑體; font-weight: bold; border: 0px; color: rgb(0, 0, 0);")
         self.grid1_layout.addWidget(label_personal_data, 0, 0)
         self.grid1_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.widgets['label_personal_data'] = label_personal_data
         
-
-        #===== Create second gird layout =====#
+        
+        # Frame for basic information
         grid2_box = QWidget()
         grid2_box.setStyleSheet("border: 0px;")
         grid2_box.setFixedHeight(40)
@@ -55,9 +56,7 @@ class PersonalWindow(QFrame):
         label_base_information = label_setup("基本資料", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid2_layout.addWidget(label_base_information, 0, 0, 1, 4)
         self.widgets['label_base_information'] = label_base_information
-        #===== Finish =====#
-        
-        #===== Create third gird layout =====#
+       
         grid3_box = QWidget()
         grid3_box.setStyleSheet("border: 0px;")
         self.grid3_layout = QGridLayout(grid3_box)
@@ -104,18 +103,14 @@ class PersonalWindow(QFrame):
         entry_contact_number.setMaxLength(10)
         self.grid3_layout.addWidget(entry_contact_number, 3, 1, 1, 3)
         self.widgets['entry_contact_number'] = entry_contact_number
-        #===== Finish =====#
-
-        #===== Create combine second and third gird layout =====#
+       
         combine_layout2_layout3_box = QWidget()
         combine_layout2_layout3_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border : 2px solid black;")
         self.combine_layout2_layout3 = QVBoxLayout(combine_layout2_layout3_box)
         self.combine_layout2_layout3.addWidget(grid2_box)
         self.combine_layout2_layout3.addWidget(grid3_box)
-        #==== Finish ====#
 
-
-        #===== Create fourth gird layout =====#
+        # Frame for photography information
         grid4_box = QWidget()
         grid4_box.setStyleSheet("border: 0px;")
         self.grid4_layout = QGridLayout(grid4_box)
@@ -124,9 +119,7 @@ class PersonalWindow(QFrame):
         label_photography_information = label_setup("拍攝資料", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid4_layout.addWidget(label_photography_information, 0, 0, 1, 4)
         self.widgets['label_photography_information'] = label_photography_information
-        #==== Finish ====#
 
-        #===== Create fifth gird layout =====#
         grid5_box = QWidget()
         grid5_box.setStyleSheet("border: 0px;")
         self.grid5_layout = QGridLayout(grid5_box)
@@ -152,17 +145,14 @@ class PersonalWindow(QFrame):
         combobox_photography_reason = combobox_setup(["請選擇拍攝原因", "醫療檢查", "健康檢查", "其他"], "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid5_layout.addWidget(combobox_photography_reason, 2, 1, 1, 3)
         self.widgets['combobox_photography_reason'] = combobox_photography_reason
-        #===== Finish =====#
-
-        #===== Create combine fourth and fifth gird layout =====#
+       
         combine_layout4_layout5_box = QWidget()
         combine_layout4_layout5_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border : 2px solid black;")
         self.combine_layout4_layout5 = QVBoxLayout(combine_layout4_layout5_box)
         self.combine_layout4_layout5.addWidget(grid4_box)
         self.combine_layout4_layout5.addWidget(grid5_box)
-        #==== Finish ====#
-
-        #===== Create sixth gird layout =====#
+       
+        # Frame for medical information
         grid6_box = QWidget()
         grid6_box.setStyleSheet("border: 0px;")
         grid6_box.setFixedHeight(40)
@@ -170,9 +160,7 @@ class PersonalWindow(QFrame):
         label_medical_information = label_setup("醫療資料", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid6_layout.addWidget(label_medical_information, 0, 0, 1, 4)
         self.widgets['label_medical_information'] = label_medical_information
-        #==== Finish ====#
 
-        #===== Create seventh gird layout =====#
         grid7_box = QWidget()
         grid7_box.setStyleSheet("border: 0px;")
         self.grid7_layout = QGridLayout(grid7_box)
@@ -204,44 +192,36 @@ class PersonalWindow(QFrame):
         entry_caution = entry_setup("請輸入注意事項", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid7_layout.addWidget(entry_caution, 3, 1, 1, 3)
         self.widgets['entry_caution'] = entry_caution
-        #===== Finish =====#
 
-        #===== Create combine sixth and seventh gird layout =====#
         combine_layout6_layout7_box = QWidget()
         combine_layout6_layout7_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border : 2px solid black;")
         self.combine_layout6_layout7 = QVBoxLayout(combine_layout6_layout7_box)
         self.combine_layout6_layout7.addWidget(grid6_box)
         self.combine_layout6_layout7.addWidget(grid7_box)
-        #==== Finish ====#
         
-        #===== Create combine eighth gird layout =====#
+        # Frame for saving information
         grid8_layout_box = QWidget()
         grid8_layout_box.setStyleSheet("border: 0px;")
         grid8_layout_box.setFixedHeight(40)
         self.grid8_layout = QGridLayout(grid8_layout_box)
         label_save_path = label_setup("儲存路徑 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid8_layout.addWidget(label_save_path, 0, 0)
-        #==== Finish =====#
 
-        #===== Create ninth gird layout =====#
         grid9_layout_box = QWidget()
         grid9_layout_box.setStyleSheet("border: 0px;")
         self.grid9_layout = QGridLayout(grid9_layout_box)
         entry_save_path = entry_setup("請選擇儲存資料夾", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;") 
         entry_save_path.setReadOnly(True)
         self.grid9_layout.addWidget(entry_save_path, 1, 0, 1, 4)
-        # self.save_path_text['entry_save_path'] = entry_save_path
         self.widgets['entry_save_path'] = entry_save_path
-        #==== Finish =====#
-
-        #===== Create combine eighth and ninth gird layout =====#
+    
         combine_layout8_layout9_box = QWidget()
         combine_layout8_layout9_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border : 2px solid black;")
         self.combine_layout8_layout9 = QVBoxLayout(combine_layout8_layout9_box)
         self.combine_layout8_layout9.addWidget(grid8_layout_box)
         self.combine_layout8_layout9.addWidget(grid9_layout_box)
-        #==== Finish ====#
 
+        # Frame for buttons
         grid10_box = QWidget()
         self.grid10_layout = QHBoxLayout(grid10_box)
         self.grid10_layout.setSpacing(15)
@@ -258,10 +238,11 @@ class PersonalWindow(QFrame):
         self.widgets['button_save'] = button_save
  
 
+        # Frame for final layout
         self.main_layout = QVBoxLayout(self)
         content_widget = QWidget()
         content_layout = QVBoxLayout(content_widget)
-        content_layout.addWidget(self.frames['title'])
+        content_layout.addWidget(grid1_box)
         content_layout.addWidget(combine_layout2_layout3_box)
         content_layout.addWidget(combine_layout4_layout5_box)
         content_layout.addWidget(combine_layout6_layout7_box)

@@ -77,7 +77,6 @@ class RealSenseCamera:
             cv2.rectangle(color_image, (x, y), (x + w, y + h), color, 2)
             cv2.putText(color_image, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
-        #color_image = cv2.resize(color_image, (0, 0), fx=0.75, fy=0.75)
         return original_color_image, color_image, depth_image, have_face
     
     def get_frame(self):

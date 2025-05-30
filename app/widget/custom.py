@@ -1,5 +1,7 @@
-from PyQt6.QtCore import QDate
-from PyQt6.QtWidgets import QDateEdit
+from PyQt6.QtWidgets import (
+    QComboBox,
+    QDateEdit
+)
 
 
 class QDateEditNoWheel(QDateEdit):
@@ -10,4 +12,10 @@ class QDateEditNoWheel(QDateEdit):
     def wheelEvent(self, event):
         pass
 
-        
+class QComboBoxNoWheel(QComboBox):
+    """
+    A custom QComboBox that disables the mouse wheel event to prevent scrolling through options
+    when using the mouse wheel.
+    """
+    def wheelEvent(self, event):
+        pass

@@ -1,9 +1,18 @@
 import csv
-import sys
 import os
 
-# import pandas as pd
-from PyQt6 import QtWidgets, QtCore
+from PyQt6.QtCore import Qt, QDate
+from PyQt6.QtWidgets import (
+    QComboBox,
+    QDateEdit,
+    QFileDialog,
+    QFrame,
+    QGridLayout,
+    QLineEdit,
+    QScrollArea,
+    QVBoxLayout,
+    QWidget,
+)
 
 from utils.widget_helper import (
     label_setup, 
@@ -14,7 +23,7 @@ from utils.widget_helper import (
 )
 
 
-class PersonalWindow(QtWidgets.QFrame):
+class PersonalWindow(QFrame):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('個人資料')
@@ -25,40 +34,40 @@ class PersonalWindow(QtWidgets.QFrame):
         self.ui()
 
     def ui(self):
-        self.main_layout = QtWidgets.QVBoxLayout(self)
+        self.main_layout = QVBoxLayout(self)
         self.main_layout.setSpacing(10)
         
-        content_widget = QtWidgets.QWidget()
-        content_layout = QtWidgets.QVBoxLayout(content_widget)
+        content_widget = QWidget()
+        content_layout = QVBoxLayout(content_widget)
         content_layout.setSpacing(10)
         
         #===== Create first gird layout =====#
-        grid1_box = QtWidgets.QWidget()
+        grid1_box = QWidget()
         grid1_box.setStyleSheet("")
         grid1_box.setFixedHeight(40)
-        self.grid1_layout = QtWidgets.QGridLayout(grid1_box)
+        self.grid1_layout = QGridLayout(grid1_box)
         label_personal_data = label_setup("個人資料", None)
         label_personal_data.setStyleSheet("font-size: 24px; font-family: 微軟正黑體; font-weight: bold; border: 0px; color: rgb(0, 0, 0);")
         self.grid1_layout.addWidget(label_personal_data, 0, 0)
-        self.grid1_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.grid1_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.widgets['label_personal_data'] = label_personal_data
         
         #===== Finish =====#
 
         #===== Create second gird layout =====#
-        grid2_box = QtWidgets.QWidget()
+        grid2_box = QWidget()
         grid2_box.setStyleSheet("border: 0px;")
         grid2_box.setFixedHeight(40)
-        self.grid2_layout = QtWidgets.QGridLayout(grid2_box)
+        self.grid2_layout = QGridLayout(grid2_box)
         label_base_information = label_setup("基本資料", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid2_layout.addWidget(label_base_information, 0, 0, 1, 4)
         self.widgets['label_base_information'] = label_base_information
         #===== Finish =====#
         
         #===== Create third gird layout =====#
-        grid3_box = QtWidgets.QWidget()
+        grid3_box = QWidget()
         grid3_box.setStyleSheet("border: 0px;")
-        self.grid3_layout = QtWidgets.QGridLayout(grid3_box)
+        self.grid3_layout = QGridLayout(grid3_box)
         self.grid3_layout.setSpacing(15)
         label_ID = label_setup("編號 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid3_layout.addWidget(label_ID, 0, 0)
@@ -105,18 +114,18 @@ class PersonalWindow(QtWidgets.QFrame):
         #===== Finish =====#
 
         #===== Create combine second and third gird layout =====#
-        combine_layout2_layout3_box = QtWidgets.QWidget()
+        combine_layout2_layout3_box = QWidget()
         combine_layout2_layout3_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border : 2px solid black;")
-        self.combine_layout2_layout3 = QtWidgets.QVBoxLayout(combine_layout2_layout3_box)
+        self.combine_layout2_layout3 = QVBoxLayout(combine_layout2_layout3_box)
         self.combine_layout2_layout3.addWidget(grid2_box)
         self.combine_layout2_layout3.addWidget(grid3_box)
         #==== Finish ====#
 
 
         #===== Create fourth gird layout =====#
-        grid4_box = QtWidgets.QWidget()
+        grid4_box = QWidget()
         grid4_box.setStyleSheet("border: 0px;")
-        self.grid4_layout = QtWidgets.QGridLayout(grid4_box)
+        self.grid4_layout = QGridLayout(grid4_box)
         self.grid4_layout.setSpacing(15)
 
         label_photography_information = label_setup("拍攝資料", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
@@ -125,9 +134,9 @@ class PersonalWindow(QtWidgets.QFrame):
         #==== Finish ====#
 
         #===== Create fifth gird layout =====#
-        grid5_box = QtWidgets.QWidget()
+        grid5_box = QWidget()
         grid5_box.setStyleSheet("border: 0px;")
-        self.grid5_layout = QtWidgets.QGridLayout(grid5_box)
+        self.grid5_layout = QGridLayout(grid5_box)
         self.grid5_layout.setSpacing(15)
 
         label_photography_year = label_setup("拍攝年份 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
@@ -153,27 +162,27 @@ class PersonalWindow(QtWidgets.QFrame):
         #===== Finish =====#
 
         #===== Create combine fourth and fifth gird layout =====#
-        combine_layout4_layout5_box = QtWidgets.QWidget()
+        combine_layout4_layout5_box = QWidget()
         combine_layout4_layout5_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border : 2px solid black;")
-        self.combine_layout4_layout5 = QtWidgets.QVBoxLayout(combine_layout4_layout5_box)
+        self.combine_layout4_layout5 = QVBoxLayout(combine_layout4_layout5_box)
         self.combine_layout4_layout5.addWidget(grid4_box)
         self.combine_layout4_layout5.addWidget(grid5_box)
         #==== Finish ====#
 
         #===== Create sixth gird layout =====#
-        grid6_box = QtWidgets.QWidget()
+        grid6_box = QWidget()
         grid6_box.setStyleSheet("border: 0px;")
         grid6_box.setFixedHeight(40)
-        self.grid6_layout = QtWidgets.QGridLayout(grid6_box)
+        self.grid6_layout = QGridLayout(grid6_box)
         label_medical_information = label_setup("醫療資料", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid6_layout.addWidget(label_medical_information, 0, 0, 1, 4)
         self.widgets['label_medical_information'] = label_medical_information
         #==== Finish ====#
 
         #===== Create seventh gird layout =====#
-        grid7_box = QtWidgets.QWidget()
+        grid7_box = QWidget()
         grid7_box.setStyleSheet("border: 0px;")
-        self.grid7_layout = QtWidgets.QGridLayout(grid7_box)
+        self.grid7_layout = QGridLayout(grid7_box)
         self.grid7_layout.setSpacing(15)
 
         label_medical_history = label_setup("病史 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
@@ -205,26 +214,26 @@ class PersonalWindow(QtWidgets.QFrame):
         #===== Finish =====#
 
         #===== Create combine sixth and seventh gird layout =====#
-        combine_layout6_layout7_box = QtWidgets.QWidget()
+        combine_layout6_layout7_box = QWidget()
         combine_layout6_layout7_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border : 2px solid black;")
-        self.combine_layout6_layout7 = QtWidgets.QVBoxLayout(combine_layout6_layout7_box)
+        self.combine_layout6_layout7 = QVBoxLayout(combine_layout6_layout7_box)
         self.combine_layout6_layout7.addWidget(grid6_box)
         self.combine_layout6_layout7.addWidget(grid7_box)
         #==== Finish ====#
         
         #===== Create combine eighth gird layout =====#
-        grid8_layout_box = QtWidgets.QWidget()
+        grid8_layout_box = QWidget()
         grid8_layout_box.setStyleSheet("border: 0px;")
         grid8_layout_box.setFixedHeight(40)
-        self.grid8_layout = QtWidgets.QGridLayout(grid8_layout_box)
+        self.grid8_layout = QGridLayout(grid8_layout_box)
         label_save_path = label_setup("儲存路徑 :", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;")
         self.grid8_layout.addWidget(label_save_path, 0, 0)
         #==== Finish =====#
 
         #===== Create ninth gird layout =====#
-        grid9_layout_box = QtWidgets.QWidget()
+        grid9_layout_box = QWidget()
         grid9_layout_box.setStyleSheet("border: 0px;")
-        self.grid9_layout = QtWidgets.QGridLayout(grid9_layout_box)
+        self.grid9_layout = QGridLayout(grid9_layout_box)
         entry_save_path = entry_setup("請選擇儲存資料夾", "font-size: 16px; font-family: 微軟正黑體; font-weight: bold;") 
         entry_save_path.setReadOnly(True)
         self.grid9_layout.addWidget(entry_save_path, 1, 0, 1, 4)
@@ -232,17 +241,17 @@ class PersonalWindow(QtWidgets.QFrame):
         #==== Finish =====#
 
         #===== Create combine eighth and ninth gird layout =====#
-        combine_layout8_layout9_box = QtWidgets.QWidget()
+        combine_layout8_layout9_box = QWidget()
         combine_layout8_layout9_box.setStyleSheet("background-color: rgb(214, 234, 248); border-radius: 20px; border : 2px solid black;")
-        self.combine_layout8_layout9 = QtWidgets.QVBoxLayout(combine_layout8_layout9_box)
+        self.combine_layout8_layout9 = QVBoxLayout(combine_layout8_layout9_box)
         self.combine_layout8_layout9.addWidget(grid8_layout_box)
         self.combine_layout8_layout9.addWidget(grid9_layout_box)
         #==== Finish ====#
 
         #===== Create tenth grid layout =====#
-        grid10_box = QtWidgets.QWidget()
+        grid10_box = QWidget()
         # grid5_box.setFixedHeight(60)
-        self.grid10_layout = QtWidgets.QGridLayout(grid10_box)
+        self.grid10_layout = QGridLayout(grid10_box)
         self.grid10_layout.setSpacing(15)
 
         button_save_folder = button_setup("選擇儲存資料夾", self.open_save_folder)
@@ -263,7 +272,7 @@ class PersonalWindow(QtWidgets.QFrame):
         #==== Finish =====#    
 
         #===== Create scroll area =====#
-        scroll_area = QtWidgets.QScrollArea()
+        scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(content_widget)
         scroll_area.setStyleSheet("border: 0px;")
@@ -293,18 +302,18 @@ class PersonalWindow(QtWidgets.QFrame):
     def get_data(self):
         data = {}
         for key, widget in self.widgets.items():
-            if isinstance(widget, QtWidgets.QLineEdit):
+            if isinstance(widget, QLineEdit):
                 data[key] = widget.text()
-            elif isinstance(widget, QtWidgets.QComboBox):
+            elif isinstance(widget, QComboBox):
                 data[key] = widget.currentText()
-            elif isinstance(widget, QtWidgets.QDateEdit):
+            elif isinstance(widget, QDateEdit):
                 data[key] = widget.date().toString('yyyy-MM-dd')
             else:
                 continue
         return data
     
     def open_save_folder(self):
-        folder_path = QtWidgets.QFileDialog.getExistingDirectory()
+        folder_path = QFileDialog.getExistingDirectory()
         if folder_path:
             print(f"選擇的儲存資料夾: {folder_path}")
             self.save_path_text['save_path'] = folder_path
@@ -312,12 +321,12 @@ class PersonalWindow(QtWidgets.QFrame):
         
     def clear_data(self):
         for key, widget in self.widgets.items():
-            if isinstance(widget, QtWidgets.QLineEdit):
+            if isinstance(widget, QLineEdit):
                 widget.clear()
-            elif isinstance(widget, QtWidgets.QComboBox):
+            elif isinstance(widget, QComboBox):
                 widget.setCurrentIndex(0)
-            elif isinstance(widget, QtWidgets.QDateEdit):
-                widget.setDate(QtCore.QDate.currentDate())
+            elif isinstance(widget, QDateEdit):
+                widget.setDate(QDate.currentDate())
             else:
                 pass
 
@@ -346,11 +355,3 @@ class PersonalWindow(QtWidgets.QFrame):
             
         status = '接續' if file_exists else '第一次'
         print(f'檔案{status}儲存在:{file_path}')
-
-
-
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    first_window = PersonalWindow()
-    first_window.show()
-    sys.exit(app.exec())

@@ -1,5 +1,4 @@
 from PyQt6.QtCore import QDate
-from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import (
     QComboBox, 
     QDateEdit, 
@@ -7,6 +6,9 @@ from PyQt6.QtWidgets import (
     QLabel, 
     QLineEdit
 )
+
+from widget.custom import QDateEditNoWheel
+
 
 #===== 標籤設定 =====#
 def label_setup(text, font_Set):
@@ -31,7 +33,7 @@ def combobox_setup(items, font_set):
 
 #===== 日期選擇器設定 =====#
 def date_setup(Form, font_Set):
-    date = QDateEdit(Form)  # 建立日期調整元件
+    date = QDateEditNoWheel(Form)  # 建立日期調整元件
     date.setDisplayFormat('yyyy-MM-dd')  # 設定顯示格式
     date.setDate(QDate.currentDate())
     date.setKeyboardTracking(False)

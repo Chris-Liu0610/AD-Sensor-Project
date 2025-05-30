@@ -1,23 +1,29 @@
-import sys
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6.QtCore import QDate
+from PyQt6.QtGui import QFont
+from PyQt6.QtWidgets import (
+    QComboBox, 
+    QDateEdit, 
+    QPushButton,
+    QLabel, 
+    QLineEdit
+)
 
 #===== 標籤設定 =====#
 def label_setup(text, font_Set):
-    label = QtWidgets.QLabel(text)
+    label = QLabel(text)
     label.setStyleSheet(f"{font_Set}; border: 0px;  color: rgb(0, 0, 0 )")
-    # label.setFixedWidth(100)
     return label
 
 #===== 輸入框設定 =====# 
 def entry_setup(prompt_text, font_Set):
-    entry = QtWidgets.QLineEdit()
+    entry = QLineEdit()
     entry.setPlaceholderText(prompt_text)  # 設定提示文字
     entry.setStyleSheet(f"{font_Set}; background-color: rgb(255, 255, 255); border: 1px solid black; border-radius: 5px; color: rgb(0, 0, 0)")  # 設定字型大小
     return entry
 
 #===== 下拉選單設定 =====#
 def combobox_setup(items, font_set):
-    comboBox = QtWidgets.QComboBox()
+    comboBox = QComboBox()
     comboBox.setStyleSheet(f'{font_set}; background-color: rgb(255, 255, 255); border: 1px solid black; border-radius: 5px; color: rgb(0, 0, 0)')  # 設定字型大小
     comboBox.addItems(items)
     comboBox.setCurrentIndex(0)  # 設定預設選項
@@ -25,18 +31,16 @@ def combobox_setup(items, font_set):
 
 #===== 日期選擇器設定 =====#
 def date_setup(Form, font_Set):
-    date = QtWidgets.QDateEdit(Form)  # 建立日期調整元件
+    date = QDateEdit(Form)  # 建立日期調整元件
     date.setDisplayFormat('yyyy-MM-dd')  # 設定顯示格式
-    date.setDate(QtCore.QDate.currentDate())
+    date.setDate(QDate.currentDate())
     date.setKeyboardTracking(False)
     date.setCalendarPopup(True)  # 設定為彈出式日曆
     date.setStyleSheet(f'{font_Set}; background-color: rgb(255, 255, 255); border: 1px solid black; border-radius: 5px; color: rgb(0, 0, 0)')  # 設定字型大小
-    
-    
     return date
 
 def button_setup(text, connect_function):
-    button = QtWidgets.QPushButton(text)
+    button = QPushButton(text)
     button.clicked.connect(connect_function)  # 連結按鈕點擊事件
     button.setStyleSheet(f"""
         QPushButton {{

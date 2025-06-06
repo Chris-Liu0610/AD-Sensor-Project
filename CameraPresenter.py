@@ -75,7 +75,7 @@ class CameraPresenter:
                 print("請選擇儲存路徑")
                 return
 
-            video_path = os.path.join(self.output_path, f'{self.ID}1.mp4')
+            video_path = os.path.join(self.output_path, f'{self.ID}.mp4')
             print(video_path)
             self.output = cv2.VideoWriter(video_path, self.fourcc, 30.0, (480, 640)) # 設定儲存影片的檔案
             self.recorderType = True

@@ -121,7 +121,7 @@ class FacePoseDetector:
         image_points = np.array(image_points, dtype=np.float32)
         
         # 獲取對應的3D模型點
-        object_points = self.get_face_3d_model(tilt_x_degrees = 1, tilt_y_degrees = -9, tilt_z_degrees = 0)
+        object_points = self.get_face_3d_model(tilt_x_degrees = 0, tilt_y_degrees = 0, tilt_z_degrees = 0)
         
         # 使用PnP算法求解姿態
         success, rvec, tvec = cv2.solvePnP(object_points, image_points, self.camera_matrix, self.dist_coeffs, flags=cv2.SOLVEPNP_ITERATIVE)
@@ -139,8 +139,8 @@ class FacePoseDetector:
         r = R.from_rotvec(rvec)
         angle = r.as_euler('xyz', degrees=True)
 
-        print(angle, end='\r', flush=False)
-
+        print(f"\r{angle}", end='', flush=True)
+    
         return angle
     
 
@@ -196,8 +196,8 @@ class MatplotlibWavePlot:
             self.lines.append(line)
             ax.set_title(f"{titles[i]} vs Time")
             ax.set_ylabel(f"{titles[i]} (deg)")
-            ax.set_xlim(0, max_points // 30)  # Initial 30 seconds window
-            ax.set_ylim(-30, 30)  # Reasonable range for head angles
+            ax.set_xlim(0, max_points // 150)  # Initial 30 seconds window
+            ax.set_ylim(-20, 20)  # Reasonable range for head angles
             ax.grid(True)
             
         # Set common x label for bottom subplot
@@ -214,15 +214,7 @@ class MatplotlibWavePlot:
         self.time_data = np.arange(0, max_points) / 30  # Assuming 30 FPS, adjust as needed
         
     def update_plot(self, pitch_data, yaw_data, roll_data, time_data=None):
-        """
-        Update the plot with new data.
-        
-        Args:
-            pitch_data: List or array of pitch values
-            yaw_data: List or array of yaw values
-            roll_data: List or array of roll values
-            time_data: Corresponding time values (optional)
-        """
+
         # Make sure data arrays have the same length
         data_length = len(pitch_data)
         x_data = time_data if time_data is not None else self.time_data[:data_length]
@@ -231,6 +223,9 @@ class MatplotlibWavePlot:
         self.pitch_line.set_data(x_data, pitch_data)
         self.yaw_line.set_data(x_data, yaw_data)
         self.roll_line.set_data(x_data, roll_data)
+
+        # for ax in self.axes:
+        #     ax.set_xlim(0, pitch_data.size / 30)  # Update x-axis limits based on data length
         
         # Redraw the canvas
         self.canvas.draw()
@@ -267,7 +262,7 @@ class PoseTracker:
 
         # Optional: 輸出影片
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        self.writer = cv2.VideoWriter(self.video_output_path, fourcc, 30, (480, 640))
+        self.writer = cv2.VideoWriter(self.video_output_path, fourcc, 30, (1440, 810))
 
         # ---------- 資料容器 ----------
         self.pitch_vals = []
@@ -279,7 +274,7 @@ class PoseTracker:
 
 
     # ---------------------------------------------------------
-    def run(self, show_window=True):
+    def run(self, show_window=True, figure_save_path=None):
 
         while True:
             ret, frame = self.cap.read()
@@ -297,9 +292,9 @@ class PoseTracker:
                 self.yaw_vals.append(angle[1])
                 self.roll_vals.append(angle[2])
             
-            pitch_recent = self.pitch_vals[-1200:] if self.pitch_vals else []
-            yaw_recent = self.yaw_vals[-1200:] if self.yaw_vals else []
-            roll_recent = self.roll_vals[-1200:] if self.roll_vals else []
+            pitch_recent = self.pitch_vals[-1500:] if self.pitch_vals else []
+            yaw_recent = self.yaw_vals[-1500:] if self.yaw_vals else []
+            roll_recent = self.roll_vals[-1500:] if self.roll_vals else []
             self.canvas.update_plot(
                 pitch_recent,  # 只顯示最近1200個點
                 yaw_recent,
@@ -312,7 +307,7 @@ class PoseTracker:
             wave_image = cv2.cvtColor(wave_image, cv2.COLOR_RGBA2BGR)
             wave_image = cv2.resize(wave_image, (int(frame.shape[1]*1.5), frame.shape[0]))
             frame = np.hstack((frame, wave_image))
-            frame = cv2.resize(frame, (1920, 1080))  
+            frame = cv2.resize(frame, (1440, 810))  
 
             # ---- 寫檔 & 顯示 ----
             if self.writer is not None:
@@ -332,12 +327,13 @@ class PoseTracker:
         if show_window:
             cv2.destroyAllWindows()
 
-        self._plot_waveforms()
+        
+        self._plot_waveforms(fig_save_path = figure_save_path)
 
 
     # ---------------------------------------------------------)
 
-    def _plot_waveforms(self):
+    def _plot_waveforms(self, fig_save_path):
         if not self.pitch_vals:
             print("沒有資料可繪圖。")
             return
@@ -349,31 +345,35 @@ class PoseTracker:
         times = np.array(self.valid_indices) / self.fps
 
         # ----- 圖 1：Pitch -----
-        fig, axs = plt.subplots(3, 1, figsize=(10, 12), sharex=True)
+        fig, axs = plt.subplots(3, 1, figsize=(10, 6), sharex=True)
         axs = axs.flatten()
+        for ax in axs:
+            ax.set_xlim(0, 10)
+            ax.set_ylim(-20, 20)
+        
 
-        axs[0].plot(times, self.pitch_vals, label='Pitch', color='blue')
+        axs[0].plot(times, self.pitch_vals, label='Pitch', color='red')
         axs[0].set_ylabel("Pitch (deg)")
         axs[0].set_title("Pitch vs. Time")
         axs[0].grid(True)
-        axs[0].legend()
         axs[1].plot(times, self.yaw_vals, label='Yaw', color='green')
         axs[1].set_ylabel("Yaw (deg)")
         axs[1].set_title("Yaw vs. Time")
         axs[1].grid(True)
-        axs[1].legend()
-        axs[2].plot(times, self.roll_vals, label='Roll', color='red')
+        axs[2].plot(times, self.roll_vals, label='Roll', color='blue')
         axs[2].set_xlabel("Time (s)")
         axs[2].set_ylabel("Roll (deg)")
         axs[2].set_title("Roll vs. Time")
         axs[2].grid(True)
-        axs[2].legend()
         plt.tight_layout()
-        plt.savefig("headpose_analysis.png")
+        plt.savefig(f"{fig_save_path}")
         plt.show()
 
 
 if __name__ == "__main__":
-    tracker = PoseTracker(".mp4", "frames/output.mp4")
-    
-    tracker.run(show_window=True)
+    video_path = "frames/上.mp4"
+    video_output_path = "frames/output上.mp4"
+    figure_save_path = "headpose_analysis上.png"
+    tracker = PoseTracker(video_path, video_output_path=video_output_path)
+    tracker.run(show_window=True, figure_save_path=figure_save_path)
+    # 角度調整124行

@@ -125,7 +125,7 @@ class FacePoseDetector:
         
         # 使用PnP算法求解姿態
         success, rvec, tvec = cv2.solvePnP(object_points, image_points, self.camera_matrix, self.dist_coeffs, flags=cv2.SOLVEPNP_ITERATIVE)
-        # print(rvec)
+        # print(rvec.shape)
 
         if not success:
             return None, None, None
@@ -196,8 +196,8 @@ class MatplotlibWavePlot:
             self.lines.append(line)
             ax.set_title(f"{titles[i]} vs Time")
             ax.set_ylabel(f"{titles[i]} (deg)")
-            ax.set_xlim(0, max_points // 150)  # Initial 30 seconds window
-            ax.set_ylim(-20, 20)  # Reasonable range for head angles
+            ax.set_xlim(0, max_points // 30)  # Initial 30 seconds window
+            ax.set_ylim(-50, 50)  # Reasonable range for head angles
             ax.grid(True)
             
         # Set common x label for bottom subplot
@@ -348,8 +348,8 @@ class PoseTracker:
         fig, axs = plt.subplots(3, 1, figsize=(10, 6), sharex=True)
         axs = axs.flatten()
         for ax in axs:
-            ax.set_xlim(0, 10)
-            ax.set_ylim(-20, 20)
+            ax.set_xlim(0, 40)
+            ax.set_ylim(-50, 50)
         
 
         axs[0].plot(times, self.pitch_vals, label='Pitch', color='red')
@@ -371,9 +371,9 @@ class PoseTracker:
 
 
 if __name__ == "__main__":
-    video_path = "frames/上.mp4"
-    video_output_path = "frames/output上.mp4"
-    figure_save_path = "headpose_analysis上.png"
+    video_path = "frames/抬頭.mp4"
+    video_output_path = "frames/output抬頭.mp4"
+    figure_save_path = "headpose_analysis抬頭.png"
     tracker = PoseTracker(video_path, video_output_path=video_output_path)
     tracker.run(show_window=True, figure_save_path=figure_save_path)
     # 角度調整124行
